@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist Học Tập · Pastel Blue</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#eef5fc;--card:#fff;--ink:#28425e;--ink2:#5c7a99;--line:#d9e8f7;--blue:#8fbde9;--blue-d:#4f8ac9;--blue-l:#e5f1fd;--danger:#b4574f;--green:#7bc796;--green-d:#3d8b5c;--green-l:#eaf8f1;--shadow:0 10px 30px -12px rgba(79,138,201,.35);--radius:16px}
+html,body{height:100%}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(900px 500px at 8% -6%,#dcecfc 0,rgba(220,236,252,0) 60%),radial-gradient(800px 500px at 96% 4%,#e4f0fd 0,rgba(228,240,253,0) 55%),radial-gradient(900px 600px at 50% 110%,#dff2ea 0,rgba(223,242,234,0) 60%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='none' stroke='%23b8d4ed' stroke-width='0.9' opacity='0.45'%3E%3Ccircle cx='18' cy='18' r='2'/%3E%3Ccircle cx='62' cy='62' r='2'/%3E%3Cpath d='M40 32c4 0 7 3 7 7-4 0-7-3-7-7z'/%3E%3Cpath d='M40 48c-4 0-7-3-7-7 4 0 7 3 7 7z'/%3E%3C/g%3E%3C/svg%3E");background-attachment:fixed,fixed,fixed,fixed;-webkit-font-smoothing:antialiased}
+.page{max-width:1180px;margin:0 auto;padding:20px 14px 100px}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between;padding:14px 18px;margin-bottom:14px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);border-radius:20px;box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:44px;height:44px;flex:none;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#bfe0ff,#8fc4f0);color:#fff;font-size:20px;box-shadow:0 6px 14px -6px rgba(79,138,201,.85)}
+h1{font-size:18px;margin:0;letter-spacing:.2px}
+.sub{margin:2px 0 0;font-size:12px;color:var(--ink2)}
+.stats{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink2)}
+.stat-num{font-weight:700;color:var(--ink);white-space:nowrap}
+.stat-bar{width:170px;height:8px;border-radius:99px;background:#e3eefb;overflow:hidden}
+.stat-bar span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#9fd0f2,#5b95d4);transition:width .45s ease}
+.stat-pct{font-weight:600;color:var(--blue-d);min-width:38px;text-align:right}
+.tabs-wrap{display:flex;align-items:center;gap:8px;margin-bottom:16px;position:relative}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;scroll-behavior:smooth;flex:1;-ms-overflow-style:none;scrollbar-width:thin}
+.tabs::-webkit-scrollbar{height:6px}
+.tabs::-webkit-scrollbar-thumb{background:#c6ddf3;border-radius:99px}
+.tab{flex:none;display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:14px;cursor:pointer;transition:.18s;font-size:13px;color:var(--ink);user-select:none;box-shadow:0 4px 10px -8px rgba(40,66,94,.4)}
+.tab:hover{border-color:var(--blue);background:var(--blue-l);transform:translateY(-1px)}
+.tab.active{background:linear-gradient(140deg,#8cc4f0,#5b95d4);color:#fff;border-color:transparent;box-shadow:0 8px 18px -10px rgba(79,138,201,.9)}
+.tab.active .tab-pct{background:rgba(255,255,255,.28);color:#fff}
+.tab.complete{background:linear-gradient(140deg,#a8e6c1,#7bc796)}
+.tab.complete .tab-pct{background:rgba(255,255,255,.35);color:#fff}
+.tab-name{font-weight:600;white-space:nowrap;max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.tab-pct{font-size:11px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--blue-l);color:var(--blue-d);white-space:nowrap}
+.tab-del{opacity:0;border:none;background:transparent;color:inherit;font-size:14px;cursor:pointer;padding:0 2px;line-height:1;border-radius:4px;transition:.15s}
+.tab:hover .tab-del,.tab.active .tab-del{opacity:.75}
+.tab-del:hover{opacity:1;background:rgba(255,255,255,.3)}
+.btn-newtab{flex:none;padding:10px 14px;background:linear-gradient(140deg,#bfe0ff,#8fc4f0);border:none;border-radius:14px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 6px 14px -8px rgba(79,138,201,.85);transition:.18s;white-space:nowrap}
+.btn-newtab:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.group{position:relative;background:var(--card);border:1px solid #e7f1fb;border-radius:var(--radius);box-shadow:0 12px 30px -20px rgba(40,66,94,.6);margin-bottom:18px;overflow:hidden;animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.group::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#a9d3f5,#c9e6f7,#bfe3d6)}
+.group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:16px 16px 10px}
+.group-head h2{margin:0;font-size:17px;font-weight:700;flex:1;min-width:150px}
+.group-head .bar{height:5px;background:#eef5fc;border-radius:99px;overflow:hidden;flex-basis:100%;order:9}
+.group-head .bar span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#a9d3f5,#5b95d4);transition:width .35s}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.btn{font:inherit;font-size:13px;padding:8px 12px;border-radius:11px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.18s;box-shadow:0 4px 10px -8px rgba(40,66,94,.7);white-space:nowrap}
+.btn:hover{border-color:var(--blue);background:var(--blue-l);transform:translateY(-1px)}
+.btn.danger{color:var(--danger)}
+.btn.danger:hover{background:#fdeceb;border-color:#f0c3bf}
+.btn.tiny{font-size:11px;padding:5px 9px;border-radius:9px}
+.section{background:linear-gradient(180deg,#fbfdff,#f4faff);border:1px solid #e8f2fc;border-radius:14px;padding:12px;margin-top:12px;transition:.2s}
+.section.complete{background:linear-gradient(180deg,#f5fdfa,#eaf8f1);border-color:#c8e6d5}
+.section-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chev{border:none;background:var(--blue-l);color:var(--blue-d);width:26px;height:26px;border-radius:8px;cursor:pointer;flex:none;font-size:11px;display:grid;place-items:center;transition:.2s}
+.chev:hover{background:#d3e8fb}
+.section-head h3{margin:0;font-size:14.5px;font-weight:600;flex:1;min-width:120px;outline:none;border-radius:6px;padding:2px 5px;transition:.15s}
+.section-head h3:hover{background:#f2f8ff}
+.section-head h3:focus{background:#eaf5ff;box-shadow:0 0 0 2px rgba(143,189,233,.5)}
+.pill{font-size:12px;font-weight:600;color:var(--blue-d);background:var(--blue-l);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.pill.mini{font-size:11px;padding:2px 8px}
+.section.complete .section-head .pill{background:#d5efdf;color:var(--green-d)}
+.section-body{margin-top:8px}
+.section.collapsed .section-body{display:none}
+.subgroup{background:#f9fcff;border:1px solid #e6f0fa;border-radius:10px;padding:10px;margin-top:8px;transition:.2s}
+.subgroup.done{background:var(--green-l);border-color:#c8e6d5}
+.subgroup-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.subgroup-head h4{margin:0;font-size:13.5px;font-weight:600;flex:1;min-width:100px;color:var(--blue-d);outline:none;border-radius:6px;padding:2px 5px;transition:.15s}
+.subgroup.done .subgroup-head h4{color:var(--green-d)}
+.subgroup-head h4:hover{background:#eef7ff}
+.subgroup-head h4:focus{background:#eaf5ff;box-shadow:0 0 0 2px rgba(143,189,233,.5)}
+.subgroup.done .subgroup-head .pill{background:#d5efdf;color:var(--green-d)}
+.subgroup-head .del{opacity:0;border:none;background:transparent;color:#c98f8c;cursor:pointer;flex:none;font-size:12px;padding:4px 6px;border-radius:6px;transition:.15s}
+.subgroup:hover .del{opacity:1}
+.subgroup-head .del:hover{background:#fdeceb}
+@media (hover:none){.subgroup-head .del{opacity:.65}}
+.subgroup .items{margin-top:4px}
+.subgroup .add-item{margin-top:6px;font-size:12px;padding:6px 10px}
+.dual-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dual-col{background:#fff;border:1px solid #e9f3fc;border-radius:12px;padding:10px}
+.dual-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;color:var(--blue-d);letter-spacing:.3px;padding-bottom:6px;border-bottom:1px dashed #e1eefa;margin-bottom:6px}
+.items{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.item{display:flex;align-items:flex-start;gap:10px;padding:6px 8px;border-radius:10px;transition:.15s}
+.item:hover{background:#eef7ff}
+.item .txt{flex:1;font-size:14px;line-height:1.5;outline:none;padding:2px 4px;border-radius:6px;word-break:break-word;transition:.15s;cursor:text}
+.item .txt:hover{background:#f2f8ff}
+.item .txt:focus{background:#e8f4ff;box-shadow:0 0 0 2px rgba(143,189,233,.45)}
+.item.done .txt{color:#9bb0c5;text-decoration:line-through;text-decoration-color:#bcd3e6}
+.item .del{opacity:0;border:none;background:transparent;color:#c98f8c;cursor:pointer;flex:none;font-size:14px;line-height:1;padding:5px 7px;border-radius:8px;transition:.15s}
+.item:hover .del,.item .del:focus{opacity:1}
+.item .del:hover{background:#fdeceb}
+@media (hover:none){.item .del{opacity:.65}}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:7px;border:2px solid #a9cdea;background:#fff;cursor:pointer;flex:none;margin:2px 0 0;position:relative;transition:.18s}
+input[type=checkbox]:hover{border-color:var(--blue-d)}
+input[type=checkbox]:checked{background:linear-gradient(140deg,#8cc4f0,#5b95d4);border-color:#5b95d4}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:5.5px;top:1.5px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);border-radius:1px}
+.subgroup-head input[type=checkbox]{width:18px;height:18px;border-radius:6px;margin-top:0}
+.subgroup-head input[type=checkbox]:checked{background:linear-gradient(140deg,#a8e6c1,#7bc796);border-color:#7bc796}
+.subgroup-head input[type=checkbox]:checked::after{left:4.5px;top:1px;width:4.5px;height:9px}
+.add-item,.add-section-inline{border:1px dashed #c3ddf4;background:transparent;color:var(--blue-d);border-radius:10px;padding:8px 12px;font-size:13px;font-family:inherit;cursor:pointer;margin-top:8px;transition:.18s;width:100%;text-align:left}
+.add-item:hover,.add-section-inline:hover{background:#eaf5ff;border-color:var(--blue)}
+.empty{text-align:center;padding:60px 20px;color:var(--ink2);line-height:1.9;background:#fff;border-radius:var(--radius);border:1px dashed #cfe4f7}
+.fab-bar{position:fixed;bottom:16px;right:16px;z-index:40;display:flex;gap:8px;background:rgba(255,255,255,.9);padding:8px;border-radius:16px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 12px 30px -10px rgba(40,66,94,.4);border:1px solid rgba(255,255,255,.9)}
+.fab-bar .btn{padding:8px 12px;font-size:12px}
+.search-wrap{display:flex;gap:8px;margin-bottom:12px}
+input.search{flex:1;font:inherit;font-size:14px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);transition:.18s}
+input.search:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(143,189,233,.22)}
+.hide{display:none!important}
+.foot{text-align:center;font-size:11px;color:#9ab4cc;margin-top:26px}
+@media (max-width:760px){.page{padding:14px 8px 100px}.dual-grid{grid-template-columns:1fr}.topbar{padding:12px;gap:10px;border-radius:16px}h1{font-size:15px}.stat-bar{width:110px}.group-head{padding:14px 12px 8px}.section{padding:10px}.subgroup{padding:8px}.subgroup-head h4{font-size:13px}.item .txt{font-size:13.5px}.tab-name{max-width:160px;font-size:12.5px}.fab-bar{bottom:10px;right:10px;padding:6px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">✦</div>
+      <div><h1>Checklist Học Tập</h1><p class="sub">Kế hoạch cá nhân · Tự động lưu</p></div>
+    </div>
+    <div class="stats">
+      <span class="stat-num" id="statNum">0/0</span>
+      <span class="stat-bar"><span id="statBar"></span></span>
+      <span class="stat-pct" id="statPct">0%</span>
+    </div>
+  </header>
+  <div class="search-wrap"><input id="search" class="search" type="search" placeholder="🔍 Tìm bài học, chương, mục..."></div>
+  <div class="tabs-wrap">
+    <div class="tabs" id="tabs"></div>
+    <button class="btn-newtab" id="btnNewTab">＋ Tab mới</button>
+  </div>
+  <main id="content"></main>
+  <footer class="foot">Dữ liệu được lưu tự động trong trình duyệt của bạn (localStorage).</footer>
+</div>
+<div class="fab-bar">
+  <button class="btn" id="btnExport" title="Xuất JSON">⭳ Xuất</button>
+  <button class="btn" id="btnImport" title="Nhập JSON">⭱ Nhập</button>
+  <button class="btn danger" id="btnReset" title="Khôi phục dữ liệu mẫu">↺ Mẫu</button>
+</div>
+<input type="file" id="fileInput" accept="application/json" hidden>
+<script>
+(function(){
+'use strict';
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const de=(n=60)=>Array.from({length:n},(_,i)=>'ĐỀ '+pad(i+1));
+const pas=(a,b)=>Array.from({length:b-a+1},(_,i)=>'Passage '+(a+i));
+
+function buildSeed(){
+  const S=(name,items)=>({name,type:'single',items:items.map(t=>({text:t,done:false}))});
+  const D=(name,items)=>({name,type:'dual',items:items.map(t=>({text:t,sgk:false,sbt:false}))});
+  const SG=(name,groups)=>({name,type:'grouped',groups:groups.map(g=>({name:g.name,items:g.items.map(t=>({text:t,done:false}))}))});
+  const G=(name,items)=>({name,items});
+  const N=(name,sections)=>({name,type:'n',sections});
+  const A=(n,f)=>Array.from({length:n},(_,i)=>f(i+1));
+
+  // ===== 6. TIẾNG ANH MỚI BẮT ĐẦU (30 units) =====
+  const unitNames=['SENTENCE STRUCTURES','NOUNS & PRONOUNS','THE ARTICLES','QUANTIFIERS','PRESENT SIMPLE TENSE','PRESENT CONTINUOUS TENSE','PRESENT PERFECT TENSE','PAST SIMPLE TENSE','PAST CONTINUOUS TENSE','PAST PERFECT TENSE','SIMPLE FUTURE TENSE','BE GOING TO','SUBJECT-VERB AGREEMENT','ADJECTIVE ORDER','PREPOSITIONS','GERUNDS & INFINITIVES','WORD FORMATION','CONJUNCTIONS','MODAL VERBS','REPORTED SPEECH (PART 1)','REPORTED SPEECH (PART 2)','PASSIVE VOICE','CONDITIONALS','RELATIVE CLAUSES','COMPARISONS','DOUBLE COMPARISONS','SUBJUNCTIVES','COMMON SENTENCES USED IN DAILY CONVERSATIONS','COMMON DAILY SITUATIONS AND RESPONSES','COMMON IDIOMS AND PROVERBS'];
+  const unitSections=unitNames.map((u,i)=>S('UNIT '+(i+1)+': '+u,['I. GRAMMAR','II. LISTENING AND SPEAKING','III. READING','IV. WRITING']));
+
+  // ===== 7. 550 BÀI ĐỌC HIỂU =====
+  const passageTopics=[['TOPIC 1: FAMILY LIFE – CUỘC SỐNG GIA ĐÌNH',61,75],['TOPIC 2: RELATIONSHIPS – CÁC MỐI QUAN HỆ',76,88],['TOPIC 3: BEING INDEPENDENT – SỐNG TỰ LẬP',89,99],['TOPIC 4: EXPERIENCES – NHỮNG TRẢI NGHIỆM',100,106],['TOPIC 5: GENDER EQUALITY – BÌNH ĐẲNG GIỚI',107,118],['TOPIC 6: LIFE STORIES – NHỮNG CÂU CHUYỆN CUỘC SỐNG',119,128],['TOPIC 7: WAYS OF SOCIALIZING – CÁC CÁCH GIAO TIẾP',129,135],['TOPIC 8: GENERATION GAPS – KHOẢNG CÁCH THẾ HỆ',136,148],['TOPIC 9: SOCIAL ISSUES – CÁC VẤN ĐỀ XÃ HỘI',149,157],['TOPIC 10: VOLUNTEER – HOẠT ĐỘNG TÌNH NGUYỆN',158,170],['TOPIC 11: MASS MEDIA – TRUYỀN THÔNG ĐẠI CHÚNG',171,189],['TOPIC 12: ENTERTAINMENT – GIẢI TRÍ',190,201],['TOPIC 13: BOOKS – SÁCH',202,212],['TOPIC 14: HEALTHY LIFESTYLE AND LONGEVITY – LỐI SỐNG LÀNH MẠNH VÀ TUỔI THỌ',213,230],['TOPIC 15: CELEBRATION – LỄ KỶ NIỆM VÀ LỄ HỘI',231,242],['TOPIC 16: TOURISM – DU LỊCH',243,255],['TOPIC 17: CULTURE – VĂN HÓA',256,278],['TOPIC 18: EDUCATION – GIÁO DỤC',279,298],['TOPIC 19: A NEW WAY TO LEARN – PHƯƠNG PHÁP HỌC TẬP MỚI',299,313],['TOPIC 20: SPORTS – THỂ THAO',314,325],['TOPIC 21: JOBS – NGHỀ NGHIỆP',326,340],['TOPIC 22: LIFE IN THE FUTURE – CUỘC SỐNG TRONG TƯƠNG LAI',341,351],['TOPIC 23: ENERGY – NĂNG LƯỢNG',352,359],['TOPIC 24: POPULATION – DÂN SỐ',360,369],['TOPIC 25: URBANIZATION – ĐÔ THỊ HÓA',370,379],['TOPIC 26: ARTIFICIAL INTELLIGENCE – TRÍ TUỆ NHÂN TẠO',380,392],['TOPIC 27: POLLUTION – Ô NHIỄM',393,404],['TOPIC 28: NATURE IN DANGER – THIÊN NHIÊN ĐANG BỊ ĐE DỌA',405,415],['TOPIC 29: ENDANGERED SPECIES – CÁC LOÀI CÓ NGUY CƠ TUYỆT CHỦNG',416,426],['TOPIC 30: ENVIRONMENTS – MÔI TRƯỜNG',427,433],['TOPIC 31: GLOBAL WARMING – NÓNG LÊN TOÀN CẦU',434,441],['TOPIC 32: CONSERVATIONS – BẢO TỒN',442,451],['TOPIC 33: GREEN MOVEMENTS – CÁC PHONG TRÀO XANH',452,459],['TOPIC 34: PLACES OF INTEREST – NHỮNG ĐỊA ĐIỂM THÚ VỊ',460,475],['TOPIC 35: INTERNATIONAL ORGANIZATIONS – CÁC TỔ CHỨC QUỐC TẾ',476,488],['TOPIC 36: INVENTION – PHÁT MINH',489,504],['TOPIC 37: SPACE CONQUEST – CHINH PHỤC VŨ TRỤ',505,515],['TOPIC 38: RESEARCH – NGHIÊN CỨU',516,532],['TOPIC 39: HISTORY – LỊCH SỬ',533,541],['TOPIC 40: FOOD AND DRINKS – ĐỒ ĂN VÀ THỨC UỐNG',542,550]];
+  const readingSections=[S('I. CÁCH LÀM DẠNG BÀI ĐỌC HIỂU',['Phân tích cách làm','Bài tập vận dụng',...pas(1,27)]),S('II. CÁCH LÀM DẠNG BÀI ĐỌC ĐIỀN',['Phân tích cách làm','Bài tập vận dụng',...pas(28,60)]),...passageTopics.map(([name,a,b])=>S(name,pas(a,b)))];
+
+  // ===== 17. 4500 COLLOCATIONS =====
+  const collTopics=['GIÁO DỤC','CÔNG VIỆC VÀ KINH DOANH','BẮT ĐẦU VÀ KẾT THÚC','THÀNH CÔNG VÀ THẤT BẠI','NGUYÊN NHÂN VÀ TÁC ĐỘNG','NỖ LỰC','GIA ĐÌNH','MỐI QUAN HỆ','VẤN ĐỀ XÃ HỘI','ĐỒNG Ý VÀ KHÔNG ĐỒNG Ý','KHEN NGỢI VÀ CHỈ TRÍCH','LỜI KHUYÊN VÀ CẢNH BÁO','NGOẠI HÌNH, TÍNH CÁCH VÀ HÀNH VI','CÁC BỘ PHẬN CƠ THỂ','CẢM XÚC','MÔI TRƯỜNG','ĐỘNG VẬT','THỜI TIẾT','NGUY HIỂM','CUỘC SỐNG HẰNG NGÀY','TRẢI NGHIỆM','NHÀ Ở VÀ CĂN HỘ','THỨC ĂN VÀ ĐỒ UỐNG','DU LỊCH','THỊ TRẤN VÀ QUÊ','VĂN HÓA','LỄ HỘI VÀ TỔ CHỨC','GIẢI TRÍ','GAME VÀ THỂ THAO','QUẦN ÁO VÀ THỜI TRANG','MÀU SẮC','SỨC KHỎE','TIỀN BẠC VÀ TÀI CHÍNH','SỐ LƯỢNG VÀ LƯỢNG','TÍNH CẦN THIẾT VÀ TÍNH ĐÁNG MONG MUỐN','KHOA HỌC VÀ CÔNG NGHỆ','TIN TỨC','LỊCH SỬ','TỘI PHẠM VÀ PHÁP LUẬT','CHIẾN TRANH VÀ XUNG ĐỘT','THỜI GIAN','SO SÁNH VÀ TƯƠNG PHẢN','KÍCH THƯỚC VÀ VỊ TRÍ','XÁC SUẤT VÀ MAY MẮN','BINOMIALS','QUẢNG CÁO'];
+
+  return [
+  // ===== TAB 1: TỰ HỌC VẬT LÝ (SG - Chương → Bài) =====
+  N('1. TỰ HỌC VẬT LÝ',[
+    SG('CHƯƠNG 1: DAO ĐỘNG',[
+      G('BÀI 1: DAO ĐỘNG ĐIỀU HÒA',['Bài giảng: Làm quen với dao động điều hòa','Bài giảng: Làm quen với vòng tròn mối quan hệ','Bài giảng: Làm quen với đồ thị hình sin','Đề thi online: Làm quen với dao động điều hòa','Đề thi online: Làm quen với vòng tròn mối quan hệ','Đề thi online: Làm quen với đồ thị hình sin']),
+      G('BÀI 2: MÔ TẢ DAO ĐỘNG ĐIỀU HÒA',['Bài giảng: Xác định độ lệch pha của hai dao động','Bài giảng: Xác định khoảng thời gian','Bài giảng: Xác định thời điểm lần thứ N','Đề thi online: Xác định độ lệch pha của hai dao động','Đề thi online: Xác định khoảng thời gian','Đề thi online: Xác định thời điểm lần thứ N']),
+      G('BÀI 3: VẬN TỐC, GIA TỐC TRONG DAO ĐỘNG ĐIỀU HÒA',['Bài giảng: Vận tốc, gia tốc trong dao động điều hòa','Bài giảng: Xác định các đại lượng từ phương trình độc lập','Đề thi online: Vận tốc, gia tốc trong dao động điều hòa','Đề thi online: Xác định các đại lượng từ phương trình độc lập']),
+      G('BÀI 4: MỘT SỐ DẠNG BÀI TOÁN THỜI GIAN TRONG DAO ĐỘNG ĐIỀU HÒA',['Bài giảng: Cho trạng thái 1, tìm trạng thái 2','Bài giảng: Quãng đường, số lần, thời gian đi hết quãng đường','Bài giảng: Quãng đường, thời gian lớn nhất nhỏ nhất','Bài giảng: Viết phương trình dao động','Đề thi online: Cho trạng thái 1, tìm trạng thái 2','Đề thi online: Quãng đường, số lần, thời gian','Đề thi online: Quãng đường, thời gian lớn nhất nhỏ nhất','Đề thi online: Viết phương trình dao động']),
+      G('BÀI 5: MỘT SỐ HỆ DAO ĐỘNG ĐIỀU HÒA THƯỜNG GẶP',['Bài giảng: Con lắc lò xo','Bài giảng: Con lắc đơn','Đề thi online: Con lắc lò xo','Đề thi online: Con lắc đơn']),
+      G('BÀI 6: NĂNG LƯỢNG TRONG DAO ĐỘNG ĐIỀU HÒA',['Bài giảng: Động năng, thế năng, cơ năng','Đề thi online: Động năng, thế năng, cơ năng']),
+      G('BÀI 7: DAO ĐỘNG TẮT DẦN, CƯỠNG BỨC, CỘNG HƯỞNG',['Bài giảng: Dao động tắt dần, cưỡng bức, cộng hưởng','Đề thi online: Dao động tắt dần, cưỡng bức, cộng hưởng'])
+    ]),
+    SG('CHƯƠNG 2: SÓNG',[
+      G('BÀI 1: MÔ TẢ SÓNG',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Xác định các đại lượng của sóng','Bài giảng: Phương trình sóng','Bài giảng: Độ lệch pha của hai phần tử sóng','Đề thi online: Xác định các đại lượng của sóng','Đề thi online: Phương trình sóng','Đề thi online: Độ lệch pha của hai phần tử sóng']),
+      G('BÀI 2: SÓNG NGANG - SÓNG DỌC',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Sóng dọc – Sóng ngang','Bài giảng: Sóng âm','Đề thi online: Sóng dọc – Sóng ngang','Đề thi online: Sóng âm']),
+      G('BÀI 3: SÓNG ĐIỆN TỪ',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Đặc điểm, tính chất của sóng điện từ','Bài giảng: Thang sóng điện từ','Đề thi online: Đặc điểm, tính chất của sóng điện từ','Đề thi online: Thang sóng điện từ']),
+      G('BÀI 4: GIAO THOA SÓNG',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Tính chất dao động tại M','Bài giảng: Số điểm dao động cực đại, cực tiểu','Bài giảng: Xác định vị trí điểm gần nhất, xa nhất','Bài giảng: Giao thoa với nguồn sáng đơn sắc','Đề thi online: Tính chất dao động tại M','Đề thi online: Số điểm dao động cực đại, cực tiểu','Đề thi online: Xác định vị trí điểm gần nhất, xa nhất','Đề thi online: Giao thoa với nguồn sáng đơn sắc – Đề số 1','Đề thi online: Giao thoa với nguồn sáng đơn sắc – Đề số 2','Đề thi online: Một số bài tập chùm']),
+      G('BÀI 5: SÓNG DỪNG',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Đếm số bó, số bụng, số nút','Bài giảng: Điều kiện trên dây có sóng dừng','Đề thi online: Đếm số bó, số bụng, số nút – Đề số 1','Đề thi online: Đếm số bó, số bụng, số nút – Đề số 2','Đề thi online: Điều kiện trên dây có sóng dừng'])
+    ]),
+    SG('CHƯƠNG 3: ĐIỆN TRƯỜNG',[
+      G('BÀI 1: LỰC TƯƠNG TÁC GIỮA HAI ĐIỆN TÍCH',['Bài giảng: Lực tương tác giữa hai điện tích – phần 1','Bài giảng: Lực tương tác giữa hai điện tích – phần 2','Đề thi online: Xác định lực tương tác','Đề thi online: Lực điện tổng hợp','Đề thi online: Cân bằng của hệ điện tích','Đề thi online: Tổng ôn lí thuyết','Đề thi online: Vận dụng thuyết electron','Đề thi online: Bài toán điện tích tiếp xúc']),
+      G('BÀI 2: ĐIỆN TRƯỜNG',['Bài giảng: Điện trường – phần 1','Bài giảng: Điện trường – phần 2','Đề thi online: Cường độ điện trường một điện tích','Đề thi online: Cường độ điện trường tổng hợp','Đề thi online: Điện trường tổng hợp triệt tiêu','Đề thi online: Tổng ôn lí thuyết']),
+      G('BÀI 3: ĐIỆN TRƯỜNG ĐỀU',['Bài giảng: Điện trường đều','Đề thi online: Điện trường đều, cân bằng','Đề thi online: Điện tích chuyển động trong điện trường đều']),
+      G('BÀI 4: CÔNG CỦA LỰC ĐIỆN – THẾ NĂNG – ĐIỆN THẾ – HIỆU ĐIỆN THẾ',['Bài giảng: Công của lực điện – Thế năng điện trường','Bài giảng: Điện thế','Đề thi online: Công của lực điện','Đề thi online: Thế năng của một điện tích','Đề thi online: Điện thế, hiệu điện thế']),
+      G('BÀI 5: TỤ ĐIỆN',['Bài giảng: Tụ điện','Đề thi online: Hiệu điện thế, điện dung, điện tích','Đề thi online: Ngắt – ghép tụ điện','Đề thi online: Giới hạn hoạt động của tụ điện','Đề thi online: Năng lượng của tụ điện','Đề thi online: Đưa điện môi hoặc tấm kim loại vào tụ điện'])
+    ]),
+    SG('CHƯƠNG 4: DÒNG ĐIỆN, MẠCH ĐIỆN',[
+      G('BÀI 1: CƯỜNG ĐỘ DÒNG ĐIỆN',['Bài giảng: Tóm tắt lý thuyết','Bài giảng: Cường độ dòng điện','Đề thi online: Cường độ dòng điện','Đề thi online: Vận tốc trôi của các hạt mang điện']),
+      G('BÀI 2: ĐIỆN TRỞ – ĐỊNH LUẬT ÔM',['Bài giảng: Điện trở – Định luật Ôm','Đề thi online: Sự phụ thuộc của điện trở vào hình dạng','Đề thi online: Điện trở phụ thuộc vào nhiệt độ','Đề thi online: Định luật Ôm','Đề thi online: Ghép điện trở – Đề số 1','Đề thi online: Ghép điện trở – Đề số 2']),
+      G('BÀI 3: NGUỒN ĐIỆN',['Bài giảng: Mở đầu và Tóm tắt lí thuyết','Bài giảng: Công và công suất của nguồn điện','Bài giảng: Định luật Ôm cho toàn mạch','Bài giảng: Ghép nguồn điện thành bộ','Đề thi online: Công và công suất của nguồn điện','Đề thi online: Định luật Ôm toàn mạch – Đề số 1','Đề thi online: Định luật Ôm toàn mạch – Đề số 2','Đề thi online: Định luật Ôm toàn mạch – Đề số 3','Đề thi online: Ghép nguồn điện thành bộ']),
+      G('BÀI 4: NĂNG LƯỢNG VÀ CÔNG SUẤT ĐIỆN',['Bài giảng: Năng lượng và công suất điện','Đề thi online: Công và công suất điện – Đề số 1','Đề thi online: Công và công suất điện – Đề số 2','Đề thi online: Công và công suất điện – Đề số 3','Đề thi online: Cực trị công suất'])
+    ])
+  ]),
+
+  // ===== TAB 2: NỀN TẢNG TOÁN 11 (SG - Phần-Chương → Chủ đề) =====
+  N('2. NỀN TẢNG TOÁN 11',[
+    SG('PHẦN I - CHƯƠNG I: HÀM SỐ LƯỢNG GIÁC VÀ PHƯƠNG TRÌNH LƯỢNG GIÁC',[
+      G('CHỦ ĐỀ 1: GÓC LƯỢNG GIÁC VÀ ĐỘ DÀI CUNG TRÒN',['Lý thuyết: Góc lượng giác và số đo góc lượng giác','Lý thuyết: Số đo tổng quát của góc lượng giác','Lý thuyết: Hệ thức Chasles','Lý thuyết: Đơn vị Radian và độ dài cung tròn','Lý thuyết: Đường tròn lượng giác','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: GIÁ TRỊ LƯỢNG GIÁC CỦA GÓC LƯỢNG GIÁC',['Lý thuyết: Giá trị lượng giác của góc lượng giác','Lý thuyết: Dấu của các giá trị lượng giác','Lý thuyết: Các hệ thức lượng giác cơ bản','Lý thuyết: Mối quan hệ của các góc lượng giác đặc biệt','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: CÔNG THỨC LƯỢNG GIÁC',['Lý thuyết: Công thức cộng','Lý thuyết: Công thức góc nhân đôi','Lý thuyết: Công thức biến đổi tổng sang tích','Lý thuyết: Công thức biến đổi tích sang tổng','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: HÀM SỐ LƯỢNG GIÁC',['Lý thuyết: Định nghĩa hàm số lượng giác','Lý thuyết: Hàm số chẵn, hàm số lẻ','Lý thuyết: Hàm số tuần hoàn','Lý thuyết: Đồ thị và tính chất của y = sinx, y = cosx','Lý thuyết: Đồ thị và tính chất của y = tanx, y = cotx','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 5: PHƯƠNG TRÌNH LƯỢNG GIÁC',['Lý thuyết: Phương trình sinx = m','Lý thuyết: Phương trình cosx = m','Lý thuyết: Phương trình tanx = m và cotx = n','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 6: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('PHẦN I - CHƯƠNG II: DÃY SỐ, CẤP SỐ CỘNG VÀ CẤP SỐ NHÂN',[
+      G('CHỦ ĐỀ 1: DÃY SỐ',['Lý thuyết: Định nghĩa dãy số','Lý thuyết: Cách cho một dãy số','Lý thuyết: Dãy số tăng, dãy số giảm','Lý thuyết: Dãy số bị chặn','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: CẤP SỐ CỘNG',['Lý thuyết: Định nghĩa cấp số cộng','Lý thuyết: Số hạng tổng quát của cấp số cộng','Lý thuyết: Tổng n số hạng đầu của cấp số cộng','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: CẤP SỐ NHÂN',['Lý thuyết: Định nghĩa cấp số nhân','Lý thuyết: Số hạng tổng quát của cấp số nhân','Lý thuyết: Tổng n số hạng đầu của cấp số nhân','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('PHẦN I - CHƯƠNG III: CÁC SỐ ĐẶC TRƯNG ĐO XU THẾ TRUNG TÂM',[
+      G('CHỦ ĐỀ 1: ĐẶC TRƯNG MẪU SỐ LIỆU GHÉP NHÓM (PHẦN 1)',['Lý thuyết: Mẫu số liệu ghép nhóm','Lý thuyết: Số trung bình','Lý thuyết: Mốt','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: ĐẶC TRƯNG MẪU SỐ LIỆU GHÉP NHÓM (PHẦN 2)',['Lý thuyết: Trung vị','Lý thuyết: Tứ phân vị','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 3: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('PHẦN II - CHƯƠNG IV: QUAN HỆ SONG SONG TRONG KHÔNG GIAN',[
+      G('CHỦ ĐỀ 1: ĐƯỜNG THẲNG VÀ MẶT PHẲNG TRONG KHÔNG GIAN',['Lý thuyết: Mở đầu về hình không gian','Lý thuyết: Tính chất thừa nhận','Lý thuyết: Cách xác định mặt phẳng','Lý thuyết: Hình chóp và hình tứ diện','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: HAI ĐƯỜNG THẲNG SONG SONG',['Lý thuyết: Vị trí tương đối giữa hai đường thẳng phân biệt','Lý thuyết: Tính chất của hai đường thẳng song song','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 3: ĐƯỜNG THẲNG SONG SONG VỚI MẶT PHẲNG',['Lý thuyết: Định nghĩa','Lý thuyết: Điều kiện','Lý thuyết: Tính chất','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 4: HAI MẶT PHẲNG SONG SONG',['Lý thuyết: Định nghĩa và điều kiện','Lý thuyết: Tính chất','Lý thuyết: Định lý Thalès','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 5: HÌNH LĂNG TRỤ VÀ HÌNH HỘP',['Lý thuyết: Hình lăng trụ','Lý thuyết: Hình hộp','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 6: PHÉP CHIẾU SONG SONG',['Lý thuyết: Định nghĩa','Lý thuyết: Tính chất','Lý thuyết: Hình biểu diễn','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 7: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('PHẦN II - CHƯƠNG VII: QUAN HỆ VUÔNG GÓC TRONG KHÔNG GIAN',[
+      G('CHỦ ĐỀ 1: HAI ĐƯỜNG THẲNG VUÔNG GÓC',['Lý thuyết: Góc giữa hai đường thẳng, hai đường thẳng vuông góc','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 2: ĐƯỜNG THẲNG VUÔNG GÓC VỚI MẶT PHẲNG',['Lý thuyết: Đường thẳng vuông góc với mặt phẳng','Lý thuyết: Liên hệ song song – vuông góc','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 3: PHÉP CHIẾU VUÔNG GÓC, GÓC GIỮA ĐƯỜNG VÀ MẶT',['Lý thuyết: Phép chiếu vuông góc','Lý thuyết: Góc giữa đường thẳng và mặt phẳng','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 4: HAI MẶT PHẲNG VUÔNG GÓC',['Lý thuyết: Góc và vuông góc','Lý thuyết: Hai mặt phẳng vuông góc','Lý thuyết: Góc nhị diện','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 5: THỂ TÍCH KHỐI CHÓP',['Lý thuyết: Thể tích khối chóp','Lý thuyết: Khối chóp đều','Lý thuyết: Khối chóp cụt đều','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 6: THỂ TÍCH KHỐI LĂNG TRỤ, HỘP, LẬP PHƯƠNG',['Lý thuyết: Thể tích khối lăng trụ','Lý thuyết: Hình hộp chữ nhật, hình lập phương','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 7: KHOẢNG CÁCH TRONG KHÔNG GIAN (PHẦN 1)',['Lý thuyết: Khoảng cách từ điểm đến đường và mặt','Lý thuyết: Khoảng cách giữa đường và mặt song song','Lý thuyết: Khoảng cách từ điểm đến mặt bên khối chóp','[Mở rộng] Công thức nhanh tính khoảng cách','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 8: KHOẢNG CÁCH TRONG KHÔNG GIAN (PHẦN 2)',['Lý thuyết: Đường vuông góc chung của hai đường chéo nhau','Lý thuyết: Phương pháp tính khoảng cách hai đường chéo nhau','[Mở rộng] Công thức nhanh tính khoảng cách','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 9: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('PHẦN III - CHƯƠNG V: GIỚI HẠN, HÀM SỐ LIÊN TỤC',[
+      G('CHỦ ĐỀ 1: GIỚI HẠN CỦA DÃY SỐ',['Lý thuyết: Giới hạn hữu hạn của dãy số','Lý thuyết: Các định lí về giới hạn hữu hạn','Lý thuyết: Tổng của cấp số nhân lùi vô hạn','Lý thuyết: Giới hạn vô cực của dãy số','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: GIỚI HẠN CỦA HÀM SỐ',['Lý thuyết: Giới hạn hữu hạn tại một điểm','Lý thuyết: Giới hạn một bên','Lý thuyết: Giới hạn tại vô cực','Lý thuyết: Giới hạn vô cực tại một điểm','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: HÀM SỐ LIÊN TỤC',['Lý thuyết: Liên tục tại một điểm','Lý thuyết: Liên tục trên một khoảng','Lý thuyết: Định lý 1 và 2','Lý thuyết: Định lý 3','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('PHẦN III - CHƯƠNG VI: HÀM SỐ MŨ VÀ HÀM SỐ LOGARIT',[
+      G('CHỦ ĐỀ 1: LŨY THỪA VỚI MŨ SỐ THỰC',['Lý thuyết: Lũy thừa với số mũ nguyên','Lý thuyết: Căn bậc n','Lý thuyết: Lũy thừa với số mũ hữu tỉ','Lý thuyết: Lũy thừa với mũ số thực','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: LOGARIT',['Lý thuyết: Khái niệm','Lý thuyết: Quy tắc tính','Lý thuyết: Đổi cơ số','Lý thuyết: Logarit thập phân, tự nhiên','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: HÀM SỐ MŨ VÀ HÀM SỐ LOGARIT',['Lý thuyết: Hàm số mũ','Lý thuyết: Hàm số Logarit','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 4: PHƯƠNG TRÌNH, BẤT PHƯƠNG TRÌNH MŨ VÀ LOGARIT',['Lý thuyết: Phương trình mũ','Lý thuyết: Phương trình Logarit','Lý thuyết: Bất phương trình mũ','Lý thuyết: Bất phương trình Logarit','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 5: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('PHẦN III - CHƯƠNG VIII: CÁC QUY TẮC TÍNH XÁC SUẤT',[
+      G('CHỦ ĐỀ 1: BIẾN CỐ GIAO VÀ QUY TẮC NHÂN XÁC SUẤT',['Lý thuyết: Biến cố giao và biến cố xung khắc','Lý thuyết: Biến cố độc lập','Lý thuyết: Quy tắc nhân xác suất','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 2: BIẾN CỐ HỢP VÀ QUY TẮC CỘNG XÁC SUẤT',['Lý thuyết: Biến cố hợp','Lý thuyết: Quy tắc cộng xác suất','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 3: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('PHẦN III - CHƯƠNG IX: ĐẠO HÀM',[
+      G('CHỦ ĐỀ 1: ĐỊNH NGHĨA VÀ Ý NGHĨA CỦA ĐẠO HÀM',['Lý thuyết: Đạo hàm tại một điểm','Lý thuyết: Đạo hàm trên một khoảng','Lý thuyết: Ý nghĩa hình học','Lý thuyết: Ý nghĩa vật lý','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 2: CÁC QUY TẮC TÍNH ĐẠO HÀM',['Lý thuyết: Đạo hàm các hàm thường gặp','Lý thuyết: Đạo hàm tổng, hiệu, tích, thương','Lý thuyết: Đạo hàm hàm hợp','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: ĐẠO HÀM CỦA HÀM SỐ LƯỢNG GIÁC, MŨ, LOGARIT',['Lý thuyết: Đạo hàm sinx, cosx','Lý thuyết: Đạo hàm tanx, cotx','Lý thuyết: Đạo hàm hàm mũ','Lý thuyết: Đạo hàm hàm Logarit','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: ĐẠO HÀM CẤP 2',['Lý thuyết: Đạo hàm cấp hai và ý nghĩa','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 5: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ])
+  ]),
+
+  // ===== TAB 3: TỔNG ÔN NGỮ PHÁP (S) =====
+  N('3. TỔNG ÔN NGỮ PHÁP TIẾNG ANH',[S('NGỮ PHÁP TRỌNG TÂM',['Thì của động từ','Sự phối thì','Sự hòa hợp giữa chủ ngữ và động từ','Danh động từ','Động từ nguyên mẫu','Thức giả định','Câu chủ động, bị động','Câu điều kiện','Động từ khuyết thiếu','Câu tường thuật','Câu hỏi đuôi','Mệnh đề quan hệ','Các loại mệnh đề','Mạo từ','Giới từ','Liên từ','Cụm động từ','Đảo ngữ','Các cấp so sánh','Trật tự tính từ','Cụm từ cố định','Thành ngữ','Cấu trúc tổng hợp','Phát âm, trọng âm','Tình huống giao tiếp','Sửa lỗi sai','Câu đồng nghĩa','Kết hợp câu'])]),
+
+  // ===== TAB 4: ĐỘT PHÁ 8+ (S) =====
+  N('4. ĐỘT PHÁ 8+ TIẾNG ANH',[S('PHẦN 1: NGỮ ÂM',['Phát âm','Trọng âm']),S('PHẦN 2: TỪ VỰNG',['Cụm từ kết hợp và thành ngữ','Từ đồng nghĩa - trái nghĩa']),S('PHẦN 3: NGỮ PHÁP',['[Phần đầu bị khuất] các dạng câu hỏi','Thì hiện tại đơn và hiện tại tiếp diễn','Thì tương lai đơn và tương lai gần','Thì quá khứ đơn và quá khứ tiếp diễn','Thì hiện tại hoàn thành và hiện tại hoàn thành tiếp diễn','Thì quá khứ hoàn thành và quá khứ hoàn thành tiếp diễn','Thì tương lai tiếp diễn, tương lai hoàn thành và tương lai hoàn thành tiếp diễn','Sự hòa hợp giữa chủ ngữ và động từ','Động từ khuyết thiếu','Thể bị động','Động từ nguyên thể và danh động từ','Câu điều kiện','Thức giả định'])]),
+
+  // ===== TAB 5: 70 ĐỀ LUYỆN THI =====
+  N('5. 70 ĐỀ LUYỆN THI',[S('DANH SÁCH ĐỀ',de(70))]),
+
+  // ===== TAB 6: TIẾNG ANH MỚI BẮT ĐẦU =====
+  N('6. TIẾNG ANH CHO NGƯỜI MỚI BẮT ĐẦU',unitSections),
+
+  // ===== TAB 7: 550 BÀI ĐỌC HIỂU =====
+  N('7. 550 BÀI ĐỌC HIỂU TIẾNG ANH',readingSections),
+
+  // ===== TAB 8: HSK (1,2,3) =====
+  N('8. HSK (1, 2, 3)',[
+    D('HSK 1 — Bài học (SGK + SBT)',['Bài 1. Xin chào A! Tiểu Ngữ!','Bài 2. Mình đến Lý Vân','Bài 3. Mình là người Trung Quốc','Bài 4. Chị có hai con','Bài 5. Hôm nay anh được nghỉ','Bài 6. Số điện thoại di động của bạn là bao nhiêu?','Bài 7. Em tan làm lúc 6 giờ tối','Bài 8. Bố em cũng làm việc ở bệnh viện','Bài 9. Sáng mai mình học ở trường','Bài 10. Táo ở đây rẻ thật!','Bài 11. Em đang học đại học','Bài 12. Hôm qua tuyết rơi rồi','Bài 13. Cho tôi một cốc trà','Bài 14. Mình đã xem một bộ phim','Bài 15. Hẹn gặp ở sân bay Đại Hưng!']),
+    S('HSK 1 — Đề thi',de(13)),
+    D('HSK 2 — Bài học (SGK + SBT)',['Bài 1. Chị ấy đã mời chúng em ăn vịt quay Bắc Kinh','Bài 2. Chúng ta vẫn nên gọi taxi đi Đại học Bắc Kinh nhé','Bài 3. Em muốn đi Tây An du lịch','Bài 4. Con mặc đỏ màu đỏ rất đẹp','Bài 5. Lần đầu đến thăm nhà bạn người Trung Quốc','Bài 6. Chúc mừng sinh nhật Tiểu Tuyết!','Bài 7. Bạn ấy chơi bóng rổ rất hay','Bài 8. Mặc dù em quên, nhưng anh vẫn nhớ','Bài 9. Em đi mua một cốc trà sữa','Bài 10. Sắp thi rồi','Bài 11. Em thích ăn món Trung Quốc nhất','Bài 12. Ở đây lạnh hơn Bắc Kinh nhiều','Bài 13. Chúng tôi yêu thích môn tiếng Trung Quốc','Bài 14. Một mình đón năm mới thì thật vô vị','Bài 15. Em muốn đi Trung Quốc một lần nữa','Bài thi mô phỏng: HSK (Cấp 2)']),
+    S('HSK 2 — Đề thi',de(11)),
+    D('HSK 3 — Bài học (SGK + SBT)',['Bài 1. Anh chị sẽ đến sân bay đón các em','Bài 2. Các em muốn ăn món gì thì gọi món đó','Bài 3. Khu dân cư này khá tốt','Bài 4. Khách sạn này không giống như những khách sạn khác','Bài 5. Những bức ảnh như thế này mới đẹp','Bài 6. Trên tàu cao tốc vẫn còn có thể đặt đồ ăn giao tận nơi','Bài 7. Chiếc váy đó đẹp hơn quần soóc','Bài 8. Hôm nay tôi xuất viện rồi','Bài 9. Chơi không tốt cũng không sao','Bài 10. Ngày mai em trả lại sách cho cô nhé','Bài 11. Xem ra em không thể giải quyết vấn đề này','Bài 12. Thời tiết thay đổi rất nhanh vào mùa này','Bài 13. Hàng xóm mới của tôi đến từ Vương quốc Anh','Bài 14. Quyển sách này đã bị người khác mượn rồi','Bài 15. Em cũng là một người Nam Kinh','Bài 16. Tôi nghe nói có một số gấu trúc đã ra nước ngoài','Bài 17. Mình sẽ học hỏi từ những người cần cù','Bài 18. Cháu đã học được cách gói sủi cảo']),
+    S('HSK 3 — Đề thi',de(13))
+  ]),
+
+  // ===== TAB 9: TỰ HỌC TOÁN 12 (SG - Tập-Chương → Chủ đề) =====
+  N('9. TỰ HỌC TOÁN 12',[
+    SG('TẬP 1 - CHƯƠNG 1: ỨNG DỤNG ĐẠO HÀM ĐỂ KHẢO SÁT HÀM SỐ',[
+      G('CHỦ ĐỀ 1: ÔN TẬP CÔNG THỨC VÀ Ý NGHĨA CỦA ĐẠO HÀM',['Lý thuyết: Các quy tắc tính đạo hàm','Lý thuyết: Đạo hàm của hàm số lượng giác','Lý thuyết: Công thức đạo hàm hàm mũ và logarit','Lý thuyết: Ý nghĩa của đạo hàm','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 2: TÍNH ĐƠN ĐIỆU CỦA HÀM SỐ',['Lý thuyết: Nhắc lại kiến thức về tính đơn điệu','Lý thuyết: Định lí về tính đơn điệu','Lý thuyết: Định lí mở rộng về tính đơn điệu','Lý thuyết: Lập bảng biến thiên','Lý thuyết: Tìm khoảng đơn điệu khi biết f\'(x)','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 3: CỰC TRỊ CỦA HÀM SỐ',['Lý thuyết: Định nghĩa cực trị','Lý thuyết: Định lí','Lý thuyết: Các bước tìm cực trị','Lý thuyết: Tìm điểm cực trị khi biết f\'(x)','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 4: GIÁ TRỊ LỚN NHẤT, NHỎ NHẤT CỦA HÀM SỐ',['Lý thuyết: Định nghĩa','Lý thuyết: Tìm GTLN, GTNN bằng bảng biến thiên','Lý thuyết: Tìm GTLN, GTNN trên một đoạn','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 5: TIỆM CẬN ĐỨNG VÀ TIỆM CẬN NGANG',['Lý thuyết: Tiệm cận ngang','Lý thuyết: Tiệm cận đứng','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 6: TIỆM CẬN XIÊN',['Lý thuyết: Tiệm cận xiên','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 7: KHẢO SÁT VÀ VẼ ĐỒ THỊ HÀM SỐ BẬC BA',['Lý thuyết: Khảo sát và vẽ đồ thị hàm số bậc ba','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 8: KHẢO SÁT VÀ VẼ ĐỒ THỊ HÀM PHÂN THỨC',['Lý thuyết: Khảo sát hàm phân thức bậc 1 trên bậc 1','Lý thuyết: Khảo sát hàm phân thức bậc 2 trên bậc 1','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 9: ỨNG DỤNG KHẢO SÁT HÀM SỐ VÀO BÀI TOÁN THỰC TẾ (P1)',['Lý thuyết và ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 10: ỨNG DỤNG KHẢO SÁT HÀM SỐ VÀO BÀI TOÁN THỰC TẾ (P2)',['Lý thuyết và ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 11: ỨNG DỤNG KHẢO SÁT HÀM SỐ VÀO BÀI TOÁN THỰC TẾ (P3)',['Lý thuyết và ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 12: ỨNG DỤNG KHẢO SÁT HÀM SỐ VÀO BÀI TOÁN THỰC TẾ (P4)',['Lý thuyết và ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 13: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 2: VECTƠ VÀ TỌA ĐỘ VECTƠ TRONG KHÔNG GIAN',[
+      G('CHỦ ĐỀ 1: VECTƠ TRONG KHÔNG GIAN',['Lý thuyết: Vectơ trong không gian','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: TÍCH VÔ HƯỚNG CỦA HAI VECTƠ VÀ ỨNG DỤNG',['Lý thuyết: Tích vô hướng giữa hai vectơ','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 3: HỆ TRỤC TỌA ĐỘ TRONG KHÔNG GIAN',['Lý thuyết: Hệ trục tọa độ trong không gian','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: BIỂU THỨC TỌA ĐỘ CÁC PHÉP TOÁN VECTƠ (P1)',['Lý thuyết: Biểu thức tọa độ các phép toán vectơ','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 5: BIỂU THỨC TỌA ĐỘ CÁC PHÉP TOÁN VECTƠ (P2)',['Lý thuyết: Tọa độ các điểm đặc biệt trong Oxyz','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 6: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 3: CÁC SỐ ĐẶC TRƯNG ĐO MỨC ĐỘ PHÂN TÁN',[
+      G('CHỦ ĐỀ 1: ÔN TẬP MẪU SỐ LIỆU GHÉP NHÓM',['Lý thuyết: Mẫu số liệu ghép nhóm','Lý thuyết: Số trung bình','Lý thuyết: Mốt','Lý thuyết: Tứ phân vị','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: KHOẢNG BIẾN THIÊN VÀ KHOẢNG TỨ PHÂN VỊ',['Lý thuyết: Khoảng biến thiên','Lý thuyết: Khoảng tứ phân vị','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: PHƯƠNG SAI VÀ ĐỘ LỆCH CHUẨN',['Lý thuyết: Phương sai và độ lệch chuẩn','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 4: CÁC DẠNG TOÁN HÀM SỐ CHỨA THAM SỐ M',[
+      G('CHỦ ĐỀ 1: TÍNH ĐƠN ĐIỆU CỦA HÀM SỐ CHỨA M',['Lý thuyết: Tìm m để hàm bậc 3 đơn điệu trên R','Lý thuyết: Tính đơn điệu hàm phân thức bậc 1 chứa m','Lý thuyết: Tính đơn điệu hàm phân thức bậc 2 trên bậc 1','Lý thuyết: Tìm m để đồng biến, nghịch biến trên khoảng, đoạn','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: CỰC TRỊ CỦA HÀM SỐ CHỨA M',['Lý thuyết: Tìm m để hàm đạt cực trị tại điểm cho trước','Lý thuyết: Tìm m để hàm có cực trị thỏa mãn yêu cầu','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: GTLN VÀ GTNN CỦA HÀM SỐ CHỨA M',['Lý thuyết: GTLN, GTNN của hàm số chứa m','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 4: TIỆM CẬN CỦA ĐỒ THỊ HÀM SỐ CHỨA M',['Lý thuyết: Tiệm cận của đồ thị hàm số chứa m','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 5: ỨNG DỤNG TƯƠNG GIAO VÀ PHƯƠNG TRÌNH CHỨA M',['Lý thuyết: Bài toán phương trình chứa m','Lý thuyết: Bài toán tương giao chứa m','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 6: PHƯƠNG PHÁP HÀM SỐ ĐẶC TRƯNG',['Lý thuyết: Phương pháp hàm số đặc trưng','Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 5: CÁC DẠNG TOÁN VỀ HÀM HỢP',[
+      G('CHỦ ĐỀ 1: TÍNH ĐƠN ĐIỆU CỦA HÀM HỢP',['Lý thuyết: Tìm số nghiệm phương trình f(u)=k','Lý thuyết: Bài toán đơn điệu của hàm hợp','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: CỰC TRỊ CỦA HÀM HỢP',['Lý thuyết: Cực trị của hàm hợp','Lý thuyết: Cực trị của hàm hợp chứa dấu giá trị tuyệt đối','Lý thuyết: Cực trị của hàm hợp chứa tham số m','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: GTLN VÀ GTNN CỦA HÀM HỢP',['Lý thuyết: GTLN, GTNN của hàm hợp','Lý thuyết: Ứng dụng','Bài tập tự luyện']),
+      G('CHỦ ĐỀ 4: BÀI TOÁN TIỆM CẬN CỦA ĐỒ THỊ HÀM HỢP',['Lý thuyết: Bài toán tiệm cận của đồ thị hàm hợp','Bài tập tự luyện'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 6: LỊCH THI HÀNG TUẦN',[
+      G('A. BÀI THI ONLINE',A(16,n=>'Bài thi online số '+n)),
+      G('B. ĐỀ ÔN THI GIỮA HỌC KÌ I',A(5,n=>'Đề ôn thi giữa học kì I số '+n)),
+      G('C. ĐỀ ÔN THI HỌC KÌ I',A(5,n=>'Đề ôn thi học kì I số '+n))
+    ]),
+    SG('TẬP 2 - CHƯƠNG 1: NGUYÊN HÀM, TÍCH PHÂN VÀ ỨNG DỤNG',[
+      G('CHỦ ĐỀ 1: NGUYÊN HÀM VÀ ỨNG DỤNG (P1)',['Lý thuyết: Định nghĩa nguyên hàm','Lý thuyết: Tính chất cơ bản','Lý thuyết: Ý nghĩa vật lý','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Bài tập tự luyện số 4']),
+      G('CHỦ ĐỀ 2: NGUYÊN HÀM VÀ ỨNG DỤNG (P2)',['Lý thuyết: Bảng nguyên hàm của một số hàm sơ cấp','Lý thuyết: Ứng dụng','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 3: TÍCH PHÂN',['Lý thuyết: Diện tích hình thang cong','Lý thuyết: Khái niệm tích phân','Lý thuyết: Tính chất của tích phân','Lý thuyết: Ứng dụng của tích phân','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 4: ỨNG DỤNG CỦA TÍCH PHÂN TÍNH DIỆN TÍCH',['Lý thuyết: Hình phẳng giới hạn bởi đồ thị một hàm số, trục hoành, x=a, x=b','Lý thuyết: Hình phẳng giới hạn bởi hai đồ thị, x=a, x=b','Lý thuyết: Ứng dụng vào thực tế','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 5: ỨNG DỤNG CỦA TÍCH PHÂN TÍNH THỂ TÍCH',['Lý thuyết: Thể tích hình khối','Lý thuyết: Thể tích khối tròn xoay','Lý thuyết: Ứng dụng','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 6: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 2: PHƯƠNG PHÁP TỌA ĐỘ TRONG KHÔNG GIAN',[
+      G('CHỦ ĐỀ 1: PHƯƠNG TRÌNH MẶT PHẲNG',['Lý thuyết: Phương trình mặt phẳng','Lý thuyết: Hai mặt phẳng song song, vuông góc','Lý thuyết: Tích có hướng và ứng dụng','Lý thuyết: Phương trình mặt phẳng theo đoạn chắn','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 2: PHƯƠNG TRÌNH ĐƯỜNG THẲNG TRONG KHÔNG GIAN',['Lý thuyết: Phương trình đường thẳng','Lý thuyết: Viết phương trình đường thẳng khi biết hai yếu tố','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 3: VỊ TRÍ TƯƠNG ĐỐI, GÓC VÀ KHOẢNG CÁCH',['Lý thuyết: Khoảng cách từ điểm đến mặt phẳng','Lý thuyết: Vị trí tương đối hai mặt phẳng','Lý thuyết: Vị trí tương đối đường và mặt','Lý thuyết: Vị trí tương đối hai đường thẳng','Lý thuyết: Công thức tính góc','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 4: PHƯƠNG TRÌNH MẶT CẦU',['Lý thuyết: Phương trình mặt cầu','Lý thuyết: Sự tương giao giữa mặt phẳng và mặt cầu','Lý thuyết: Sự tương giao giữa đường thẳng và mặt cầu','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 5: ÔN TẬP CHƯƠNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 3: XÁC SUẤT CÓ ĐIỀU KIỆN',[
+      G('CHỦ ĐỀ 1: XÁC SUẤT VÀ CÁC QUY TẮC TÍNH XÁC SUẤT',['Lý thuyết: Định nghĩa và tính chất của xác suất','Lý thuyết: Biến cố giao và quy tắc nhân xác suất','Lý thuyết: Biến cố hợp và quy tắc cộng xác suất','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 2: XÁC SUẤT CÓ ĐIỀU KIỆN',['Lý thuyết: Định nghĩa xác suất có điều kiện','Lý thuyết: Sơ đồ hình cây','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 3: CÔNG THỨC XÁC SUẤT TOÀN PHẦN VÀ BAYES',['Lý thuyết: Công thức xác suất toàn phần','Lý thuyết: Công thức Bayes','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 4: ÔN TẬP CHƯƠNG',['Bài tập tự luyện'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 4: CÁC DẠNG NGUYÊN HÀM TÍCH PHÂN NÂNG CAO',[
+      G('CHỦ ĐỀ 1: NGUYÊN HÀM VÀ TÍCH PHÂN HÀM ẨN',['Lý thuyết: Nguyên hàm và tích phân hàm ẩn','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: ỨNG DỤNG TRONG BÀI TOÁN CHUYỂN ĐỘNG',['Lý thuyết: Ứng dụng trong bài toán chuyển động','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: ỨNG DỤNG HÌNH HỌC CỦA TÍCH PHÂN (P1)',['Lý thuyết: Ứng dụng tính diện tích một số hình phẳng','Lý thuyết: Ứng dụng tính thể tích một số hình khối','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('CHỦ ĐỀ 4: ỨNG DỤNG HÌNH HỌC CỦA TÍCH PHÂN (P2)',['Lý thuyết: Ứng dụng trong các bài toán liên quan đến đồ thị hàm số','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 5: PHƯƠNG TRÌNH VI PHÂN TÁCH BIẾN',['Lý thuyết: Phương trình vi phân tách biến','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 6: PHƯƠNG TRÌNH VI PHÂN TUYẾN TÍNH',['Lý thuyết: Phương trình vi phân tuyến tính','Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 5: CÁC DẠNG HÌNH OXYZ NÂNG CAO',[
+      G('CHỦ ĐỀ 1: VIẾT PHƯƠNG TRÌNH MẶT PHẲNG VÀ ĐƯỜNG THẲNG (P1)',['Lý thuyết: Viết phương trình giao tuyến của hai mặt phẳng','Lý thuyết: Viết phương trình mặt phẳng chứa đường thẳng','Lý thuyết: Viết phương trình đường thẳng cắt một đường thẳng khác','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 2: VIẾT PHƯƠNG TRÌNH MẶT PHẲNG VÀ ĐƯỜNG THẲNG (P2)',['Lý thuyết: Phương trình hình chiếu vuông góc của đường thẳng lên mặt phẳng','Lý thuyết: Phương trình đường phân giác của hai đường thẳng cắt nhau','Lý thuyết: Phương trình đường thẳng cắt hai đường khác','Lý thuyết: Phương trình đường vuông góc chung','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 3: CÁC BÀI TOÁN VỀ MẶT CẦU',['Lý thuyết: Viết phương trình mặt cầu đi qua 4 điểm','Lý thuyết: Bài toán về quỹ tích','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 4: CÁC BÀI TOÁN SỬ DỤNG TÂM TỶ CỰ',['Lý thuyết: Các bài toán sử dụng tâm tỷ cự','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('CHỦ ĐỀ 5: CÁC BÀI TOÁN VỀ CỰC TRỊ',['Lý thuyết: Cực trị liên quan đến mặt cầu','Lý thuyết: Cực trị liên quan đến khoảng cách','Lý thuyết: Cực trị liên quan đến góc','Bài tập tự luyện số 1','Bài tập tự luyện số 2'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 6: LỊCH THI HÀNG TUẦN',[
+      G('A. BÀI THI ONLINE',A(14,n=>'Bài thi online số '+n)),
+      G('B. ĐỀ ÔN THI GIỮA HỌC KÌ II',A(5,n=>'Đề ôn thi giữa học kì II số '+n)),
+      G('C. ĐỀ ÔN THI HỌC KÌ II',A(5,n=>'Đề ôn thi học kì II số '+n))
+    ])
+  ]),
+
+  // ===== TAB 10: 60 ĐỀ TOÁN =====
+  N('10. 60 ĐỀ TOÁN',[S('DANH SÁCH ĐỀ',de(60))]),
+
+  // ===== TAB 11: HSA TOÁN (SG - Chương → Bài) =====
+  N('11. HSA TOÁN — TỔNG ÔN TOÁN HỌC & XỬ LÝ SỐ LIỆU',[
+    SG('CHƯƠNG 1: SỐ HỌC, BIỂU THỨC ĐẠI SỐ',[G('BÀI 1: SỐ HỌC',['Bài tập tự luyện']),G('BÀI 2: BIỂU THỨC ĐẠI SỐ',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 2: MỆNH ĐỀ VÀ TẬP HỢP',[G('BÀI 1: MỆNH ĐỀ',['Bài tập tự luyện']),G('BÀI 2: TẬP HỢP',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 3: HÀM SỐ VÀ ĐỒ THỊ',[G('BÀI 1: HÀM SỐ VÀ ĐỒ THỊ',['Bài tập tự luyện']),G('BÀI 2: HÀM SỐ BẬC HAI VÀ ĐỒ THỊ',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 4: PHƯƠNG TRÌNH, BẤT PHƯƠNG TRÌNH, HỆ',[G('BÀI 1: PHƯƠNG TRÌNH',['Bài tập tự luyện']),G('BÀI 2: HỆ PHƯƠNG TRÌNH',['Bài tập tự luyện']),G('BÀI 3: BẤT PHƯƠNG TRÌNH',['Bài tập tự luyện']),G('BÀI 4: HỆ BẤT PHƯƠNG TRÌNH',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 5: HỆ THỨC LƯỢNG TRONG TAM GIÁC',[G('BÀI 1: HỆ THỨC LƯỢNG TRONG TAM GIÁC',['Bài tập tự luyện']),G('BÀI 2: CÁC BÀI TOÁN THỰC TẾ',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 6: PHƯƠNG PHÁP TỌA ĐỘ TRONG MẶT PHẲNG',[G('BÀI 1: VECTƠ TRONG MẶT PHẲNG',['Bài tập tự luyện']),G('BÀI 2: TỌA ĐỘ VECTƠ – TỌA ĐỘ ĐIỂM',['Bài tập tự luyện']),G('BÀI 3: PHƯƠNG TRÌNH ĐƯỜNG THẲNG',['Bài tập tự luyện']),G('BÀI 4: PHƯƠNG TRÌNH ĐƯỜNG TRÒN',['Bài tập tự luyện']),G('BÀI 5: BA ĐƯỜNG CONIC',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 7: LƯỢNG GIÁC',[G('BÀI 1: CÁC PHÉP BIẾN ĐỔI LƯỢNG GIÁC',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 2: HÀM SỐ LƯỢNG GIÁC',['Bài tập tự luyện']),G('BÀI 3: PHƯƠNG TRÌNH LƯỢNG GIÁC',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 8: DÃY SỐ, CẤP SỐ CỘNG, CẤP SỐ NHÂN',[G('BÀI 1: DÃY SỐ',['Bài tập tự luyện']),G('BÀI 2: CẤP SỐ CỘNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 3: CẤP SỐ NHÂN',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])]),
+    SG('CHƯƠNG 9: LŨY THỪA, MŨ VÀ LOGARIT',[G('BÀI 1: PHÉP TÍNH LŨY THỪA',['Bài tập tự luyện']),G('BÀI 2: PHÉP TÍNH LOGARIT',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 3: HÀM SỐ MŨ VÀ HÀM SỐ LOGARIT',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 4: PHƯƠNG TRÌNH MŨ',['Bài tập tự luyện']),G('BÀI 5: PHƯƠNG TRÌNH LOGARIT',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 6: BẤT PHƯƠNG TRÌNH MŨ VÀ LOGARIT',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 7: ỨNG DỤNG PHÉP TÍNH LOGARIT',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 8: CÁC BÀI TOÁN MŨ VÀ LOGARIT CHỨA THAM SỐ',['Bài tập tự luyện']),G('BÀI 9: BÀI TOÁN GTLN, GTNN',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 10: GIỚI HẠN VÀ ĐẠO HÀM',[G('BÀI 1: GIỚI HẠN CỦA DÃY SỐ',['Bài tập tự luyện']),G('BÀI 2: GIỚI HẠN CỦA HÀM SỐ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 3: CÁC QUY TẮC TÍNH ĐẠO HÀM',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 4: TIẾP TUYẾN CỦA ĐỒ THỊ HÀM SỐ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])]),
+    SG('CHƯƠNG 11: HÌNH HỌC KHÔNG GIAN',[G('BÀI 1: GIAO TUYẾN - GIAO ĐIỂM',['Bài tập tự luyện']),G('BÀI 2: QUAN HỆ SONG SONG',['Bài tập tự luyện']),G('BÀI 3: TÍNH GÓC TRONG KHÔNG GIAN',['Bài tập tự luyện']),G('BÀI 4: TÍNH THỂ TÍCH',['Bài tập tự luyện']),G('BÀI 5: KHOẢNG CÁCH TỪ ĐIỂM ĐẾN MẶT PHẲNG',['Bài tập tự luyện']),G('BÀI 6: KHOẢNG CÁCH GIỮA HAI ĐƯỜNG CHÉO NHAU',['Bài tập tự luyện']),G('BÀI 7: ỨNG DỤNG HÌNH KHÔNG GIAN VÀO BÀI TOÁN THỰC TẾ',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 12: KHẢO SÁT HÀM SỐ VÀ ỨNG DỤNG',[G('BÀI 1: TÍNH ĐƠN ĐIỆU CỦA HÀM SỐ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 2: CỰC TRỊ CỦA HÀM SỐ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 3: GTLN – GTNN CỦA HÀM SỐ',['Bài tập tự luyện']),G('BÀI 4: TIỆM CẬN CỦA ĐỒ THỊ HÀM SỐ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 5: NHẬN DIỆN ĐỒ THỊ HÀM SỐ',['Bài tập tự luyện']),G('BÀI 6: BIỆN LUẬN SỐ NGHIỆM CỦA PHƯƠNG TRÌNH',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 7: ỨNG DỤNG VÀO BÀI TOÁN THỰC TẾ (P1)',['Bài tập tự luyện']),G('BÀI 8: ỨNG DỤNG VÀO BÀI TOÁN THỰC TẾ (P2)',['Bài tập tự luyện']),G('BÀI 9: PHƯƠNG PHÁP HÀM SỐ ĐẶC TRƯNG',['Bài tập tự luyện']),G('BÀI 10: ỨNG DỤNG HÀM SỐ VÀO BÀI TOÁN MIN – MAX',['Bài tập tự luyện']),G('BÀI 11: BÀI TOÁN TƯƠNG GIAO HÀM HỢP',['Bài tập tự luyện']),G('BÀI 12: TÍNH ĐƠN ĐIỆU CỦA HÀM HỢP',['Bài tập tự luyện']),G('BÀI 13: BÀI TOÁN CỰC TRỊ HÀM HỢP',['Bài tập tự luyện']),G('BÀI 14: MIN – MAX HÀM HỢP VÀ ỨNG DỤNG',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 13: NGUYÊN HÀM VÀ TÍCH PHÂN',[G('BÀI 1: NGUYÊN HÀM – PHẦN 1',['Bài tập tự luyện']),G('BÀI 2: NGUYÊN HÀM – PHẦN 2',['Bài tập tự luyện']),G('BÀI 3: TÍCH PHÂN – PHẦN 1',['Bài tập tự luyện']),G('BÀI 4: TÍCH PHÂN – PHẦN 2',['Bài tập tự luyện']),G('BÀI 5: ỨNG DỤNG TÍNH DIỆN TÍCH VÀ THỂ TÍCH',['Bài tập tự luyện']),G('BÀI 6: ỨNG DỤNG TRONG BÀI TOÁN CHUYỂN ĐỘNG',['Bài tập tự luyện']),G('BÀI 7: ỨNG DỤNG VÀO BÀI TOÁN THỰC TẾ',['Bài tập tự luyện']),G('BÀI 8: ỨNG DỤNG TÍNH DIỆN TÍCH HÌNH PHẲNG NÂNG CAO',['Bài tập tự luyện']),G('BÀI 9: TÍCH PHÂN HÀM ẨN',['Bài tập tự luyện'])]),
+    SG('CHƯƠNG 14: PHƯƠNG PHÁP TỌA ĐỘ TRONG KHÔNG GIAN',[G('BÀI 1: VECTƠ TRONG KHÔNG GIAN',['Bài tập tự luyện']),G('BÀI 2: TỌA ĐỘ ĐIỂM, TỌA ĐỘ VECTƠ',['Bài tập tự luyện']),G('BÀI 3: PHƯƠNG TRÌNH MẶT PHẲNG – KHOẢNG CÁCH',['Bài tập tự luyện']),G('BÀI 4: PHƯƠNG TRÌNH ĐƯỜNG THẲNG',['Bài tập tự luyện']),G('BÀI 5: BÀI TOÁN VỀ GÓC VÀ VỊ TRÍ TƯƠNG ĐỐI',['Bài tập tự luyện']),G('BÀI 6: PHƯƠNG TRÌNH MẶT CẦU – PHẦN 1',['Bài tập tự luyện']),G('BÀI 7: PHƯƠNG TRÌNH MẶT CẦU – PHẦN 2',['Bài tập tự luyện']),G('BÀI 8: CÁC BÀI TOÁN TỔNG HỢP',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 9: BÀI TOÁN CỰC TRỊ',['Bài tập tự luyện số 1','Bài tập tự luyện số 2'])]),
+    SG('CHƯƠNG 15: THỐNG KÊ, XÁC SUẤT VÀ TOÁN TƯ DUY',[G('BÀI 1: CÁC SỐ ĐẶC TRƯNG MẪU KHÔNG GHÉP NHÓM',['Bài tập tự luyện']),G('BÀI 2: CÁC SỐ ĐẶC TRƯNG MẪU GHÉP NHÓM',['Bài tập tự luyện']),G('BÀI 3: CÁC QUY TẮC ĐẾM',['Bài tập tự luyện']),G('BÀI 4: TÍNH XÁC SUẤT BẰNG ĐỊNH NGHĨA',['Bài tập tự luyện']),G('BÀI 5: CÁC QUY TẮC TÍNH XÁC SUẤT',['Bài tập tự luyện']),G('BÀI 6: XÁC SUẤT CÓ ĐIỀU KIỆN',['Bài tập tự luyện']),G('BÀI 7: CÔNG THỨC XÁC SUẤT TOÀN PHẦN VÀ BAYES',['Bài tập tự luyện số 1','Bài tập tự luyện số 2']),G('BÀI 8: CÁC BÀI TOÁN TƯ DUY LOGIC',['Bài tập tự luyện'])])
+  ]),
+
+  // ===== TAB 12: TỰ HỌC VẬT LÝ 12 (SG - Tập-Chương → Bài) =====
+  N('12. TỰ HỌC VẬT LÝ 12 (TẬP 1 + TẬP 2)',[
+    SG('TẬP 1 - CHƯƠNG 1: VẬT LÍ NHIỆT',[
+      G('BÀI 1: MÔ HÌNH ĐỘNG HỌC PHÂN TỬ VÀ CẤU TRÚC CỦA CHẤT',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 2: SỰ CHUYỂN THỂ CỦA CÁC CHẤT',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 3: THANG NHIỆT ĐỘ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Bài tập tự luyện số 4']),
+      G('BÀI 4: NỘI NĂNG. ĐỊNH LUẬT I NHIỆT ĐỘNG LỰC HỌC',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 5: NHIỆT DUNG RIÊNG',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Một số dạng bài tập nâng cao công thức tính nhiệt lượng','Bài tập nâng cao công thức tính nhiệt lượng']),
+      G('BÀI 6: NHIỆT NÓNG CHẢY, NHIỆT HÓA HƠI',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Một số bài tập nâng cao về chuyển thể','Đồ thị và bài tập nâng cao nhiệt nóng chảy, nhiệt hóa hơi']),
+      G('BÀI 7: THÍ NGHIỆM ĐO NHIỆT DUNG RIÊNG – NHIỆT NÓNG CHẢY – NHIỆT HÓA HƠI RIÊNG',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện']),
+      G('BÀI 8: ĐỀ LUYỆN TẬP TỔNG HỢP CHƯƠNG 1',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Bài tập tự luyện số 4'])
+    ]),
+    SG('TẬP 1 - CHƯƠNG 2: KHÍ LÍ TƯỞNG',[
+      G('BÀI 1: THUYẾT ĐỘNG HỌC PHÂN TỬ CHẤT KHÍ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 2: ĐỊNH LUẬT BOYLE',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 3: ĐỊNH LUẬT CHARLES',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 4: QUÁ TRÌNH ĐẲNG TÍCH',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 5: PHƯƠNG TRÌNH TRẠNG THÁI KHÍ LÍ TƯỞNG',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 6: ĐỒ THỊ BIẾN ĐỔI TRẠNG THÁI KHÍ LÍ TƯỞNG',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện']),
+      G('BÀI 7: ÁP SUẤT, ĐỘNG NĂNG CỦA PHÂN TỬ KHÍ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 8: ĐỀ LUYỆN TẬP TỔNG HỢP CHƯƠNG 2',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Bài tập tự luyện số 4'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 3: TỪ TRƯỜNG',[
+      G('BÀI 1: TỪ TRƯỜNG',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện']),
+      G('BÀI 2: LỰC TỪ – CẢM ỨNG TỪ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3','Bài tập tự luyện số 4']),
+      G('BÀI 3: CẢM ỨNG TỪ CỦA MỘT SỐ DÒNG ĐIỆN ĐẶC BIỆT',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 4: CẢM ỨNG ĐIỆN TỪ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 5: DÒNG ĐIỆN XOAY CHIỀU – ỨNG DỤNG CẢM ỨNG ĐIỆN TỪ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 6: ĐIỆN TỪ TRƯỜNG, MÔ HÌNH SÓNG ĐIỆN TỪ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện']),
+      G('BÀI 7: ĐỀ TỔNG HỢP TỪ TRƯỜNG',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3'])
+    ]),
+    SG('TẬP 2 - CHƯƠNG 4: VẬT LÍ HẠT NHÂN',[
+      G('BÀI 1: CẤU TRÚC HẠT NHÂN',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 2: NĂNG LƯỢNG LIÊN KẾT HẠT NHÂN',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 3: PHẢN ỨNG HẠT NHÂN',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 4: PHẢN ỨNG NHIỆT HẠCH, PHẢN ỨNG PHÂN HẠCH',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 5: PHÓNG XẠ',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3']),
+      G('BÀI 6: PHÓNG XẠ VÀ AN TOÀN PHÓNG XẠ, CÔNG NGHIỆP HẠT NHÂN',['Kiến thức nền tảng','Ví dụ minh họa','Bài tập tự luyện số 1','Bài tập tự luyện số 2']),
+      G('BÀI 7: ĐỀ TỔNG HỢP',['Bài tập tự luyện số 1','Bài tập tự luyện số 2','Bài tập tự luyện số 3'])
+    ])
+  ]),
+
+  // ===== TAB 13: 60 ĐỀ LÝ =====
+  N('13. 60 ĐỀ LÝ',[S('DANH SÁCH ĐỀ',de(60))]),
+
+  // ===== TAB 14: TRỌNG TÂM LÝ THUYẾT LÝ =====
+  N('14. TRỌNG TÂM LÝ THUYẾT LÝ',[
+    S('CHƯƠNG 01: VẬT LÍ NHIỆT',['Lý thuyết: Mô hình động học phân tử','Lý thuyết: Sự chuyển thể của các chất','Lý thuyết: Thang nhiệt độ','Lý thuyết: Nội năng, nguyên lí I nhiệt động lực học','Lý thuyết: Nhiệt dung riêng, nhiệt nóng chảy riêng, nhiệt hóa hơi riêng','Đề luyện tập số 01','Đề luyện tập số 02','Đề luyện tập số 03','Đề luyện tập số 04','Đề luyện tập số 05','Đề luyện tập số 06']),
+    S('CHƯƠNG 02: KHÍ LÍ TƯỞNG',['Lý thuyết: Thuyết động học phân tử chất khí','Lý thuyết: Đẳng quá trình','Lý thuyết: Phương trình trạng thái khí lí tưởng','Lý thuyết: Áp suất và động năng phân tử chất khí','Đề luyện tập số 01','Đề luyện tập số 02','Đề luyện tập số 03','Đề luyện tập số 04','Đề luyện tập số 05','Đề luyện tập số 06']),
+    S('CHƯƠNG 03: TỪ TRƯỜNG',['Lý thuyết: Từ trường','Lý thuyết: Lực từ','Lý thuyết: Từ thông, cảm ứng điện từ','Lý thuyết: Dòng điện xoay chiều, ứng dụng cảm ứng điện từ','Lý thuyết: Sóng điện từ','Đề luyện tập số 01','Đề luyện tập số 02','Đề luyện tập số 03','Đề luyện tập số 04','Đề luyện tập số 05','Đề luyện tập số 06']),
+    S('CHƯƠNG 04: HẠT NHÂN NGUYÊN TỬ',['Lý thuyết: Cấu tạo hạt nhân, độ hụt khối, năng lượng liên kết','Lý thuyết: Phản ứng hạt nhân','Lý thuyết: Phóng xạ','Lý thuyết: Công nghiệp hạt nhân – an toàn phóng xạ','Đề luyện tập số 01','Đề luyện tập số 02','Đề luyện tập số 03','Đề luyện tập số 04','Đề luyện tập số 05','Đề luyện tập số 06']),
+    S('CHƯƠNG 05: ĐỀ TỔNG HỢP',['Đề luyện tập số 01','Đề luyện tập số 02','Đề luyện tập số 03','Đề luyện tập số 04'])
+  ]),
+
+  // ===== TAB 15: VOCABFOCUS A1-A2 (SG - Topic → Unit → Lesson) =====
+  N('15. VOCABFOCUS — CORE ENGLISH VOCABULARY A1-A2',[
+    SG('TOPIC 1: THE BASICS',[
+      G('UNIT 1: NUMBERS',['Lesson 1: Cardinal Numbers','Lesson 2: Ordinal Numbers','Unit 1 Check']),
+      G('UNIT 2: TIME',['Lesson 3: Telling The Time','Lesson 4: Time Expressions','Unit 2 Check']),
+      G('UNIT 3: DAYS, MONTHS & SEASONS',['Lesson 5: Days Of The Week','Lesson 6: Months','Lesson 7: Seasons & Time Periods','Unit 3 Check']),
+      G('UNIT 4: COLOURS & SIZES',['Lesson 8: Colours','Lesson 9: Sizes','Unit 4 Check']),
+      G('TOPIC 1 TEST',['Hoàn thành bài kiểm tra Topic 1'])
+    ]),
+    SG('TOPIC 2: ALL ABOUT PEOPLE',[
+      G('UNIT 5: FAMILY',['Lesson 10: Parents And Children','Lesson 11: Grandparents And Relatives','Unit 5 Check']),
+      G('UNIT 6: PARTS OF THE BODY',['Lesson 12: Head & Face','Lesson 13: Arms & Legs','Lesson 14: Body And Organs','Unit 6 Check']),
+      G('UNIT 7: ACTION VERBS',['Lesson 15: Moving Around','Lesson 16: Using Things','Unit 11 Check']),
+      G('TOPIC 2 TEST',['Hoàn thành bài kiểm tra Topic 2'])
+    ]),
+    SG('TOPIC 3: HOME',[
+      G('UNIT 12: HOME SPACES',['Lesson 27: Homes & Rooms','Lesson 28: Parts Of A Home','Unit 12 Check']),
+      G('UNIT 13: HOUSEHOLD ITEMS',['Lesson 29: In The Kitchen','Lesson 30: In The Bedroom & Bathroom','Lesson 31: In The Living Room','Unit 13 Check']),
+      G('UNIT 14: HOUSEHOLD CHORES',['Lesson 32: Cleaning Tasks','Lesson 33: Laundry Tasks','Lesson 34: Daily Chores','Unit 14 Check']),
+      G('TOPIC 3 TEST',['Hoàn thành bài kiểm tra Topic 3'])
+    ]),
+    SG('TOPIC 5',[
+      G('UNIT 19: CLOTHES AND ACCESSORIES',['Lesson 44: Clothes','Lesson 45: Accessories','Unit 19 Check']),
+      G('UNIT 20: SHOPPING',['Lesson 46: Shopping Verbs','Lesson 47: Money & Prices','Unit 20 Check']),
+      G('UNIT 21: HEALTH',['Lesson 48: Common Health Problems','Lesson 49: Describing Injuries','Unit 21 Check']),
+      G('TOPIC 5 TEST',['Hoàn thành bài kiểm tra Topic 5'])
+    ]),
+    SG('TOPIC 6: GETTING AROUND',[
+      G('UNIT 22: PLACES',['Lesson 50: Public Places','Lesson 51: Places To Visit','Lesson 52: Cultural & Historical Places'])
+    ]),
+    SG('TOPIC 7',[
+      G('UNIT 27: BOOKS & MUSIC',['Lesson 61: Books','Lesson 62: Music','Unit 27 Check']),
+      G('TOPIC 7 TEST',['Hoàn thành bài kiểm tra Topic 7'])
+    ]),
+    SG('TOPIC 8: ENVIRONMENT',[
+      G('UNIT 28: WEATHER',['Lesson 63: Weather Words','Lesson 64: Weather Adjectives','Unit 28 Check']),
+      G('UNIT 29: PLANTS',['Lesson 65: Parts Of A Plant','Lesson 66: Common Plants','Unit 29 Check']),
+      G('UNIT 30: ANIMALS',['Lesson 67: Farm Animals','Lesson 68: Wild Animals','Lesson 69: Pets','Unit 30 Check'])
+    ]),
+    SG('TOPIC 10: COMMUNICATION & TECHNOLOGY',[
+      G('UNIT 35: COMMUNICATION TECHNOLOGY',['Lesson 78: Messages & Email','Lesson 79: Smartphones','Unit 35 Check']),
+      G('UNIT 36: MEDIA',['Lesson 80: Media Platforms','Lesson 81: TV Programmes','Unit 36 Check']),
+      G('UNIT 37: INTERNET & AI',['Lesson 82: Internet Use','Lesson 83: Internet Safety','Lesson 84: Artificial Intelligence (AI)','Unit 37 Check']),
+      G('TOPIC 10 TEST',['Hoàn thành bài kiểm tra Topic 10'])
+    ])
+  ]),
+
+  // ===== TAB 16: WORD FORMATION =====
+  N('16. TỪ VỰNG TIẾNG ANH — WORD FORMATION',[
+    S('PART 1: PREFIXES — TIỀN TỐ',['UNIT 1: a–','UNIT 2: ad–','UNIT 3: anti–','UNIT 4: auto–','UNIT 5: bi–','UNIT 11: cor–','UNIT 12: de–','UNIT 13: dis–','UNIT 14: em–/ en–','REVIEW TEST 2','UNIT 15: e–/ ex–','REVIEW TEST 6','PREFIXES TEST']),
+    S('PART 2: ROOTS — GỐC TỪ',['UNIT 43: act','UNIT 44: aqua','UNIT 45: aud','UNIT 46: cred','UNIT 68: tele','UNIT 69: tract','UNIT 70: vers/ vert','UNIT 71: vid/ vis','REVIEW TEST 10','ROOTS TEST']),
+    S('PART 3: SUFFIXES — HẬU TỐ',['UNIT 72: –able/ –ible','UNIT 73: –age','UNIT 74: –al/ –ial/ –ual','UNIT 75: –ance/ –ence','UNIT 76: –ant/ –ent','UNIT 77: –ate'])
+  ]),
+
+  // ===== TAB 17: 4500 COLLOCATIONS (SG - mỗi chủ đề là group) =====
+  N('17. 4500 ENGLISH COLLOCATIONS AND IDIOMS',[
+    SG('PHẦN I: GIỚI THIỆU CHUNG',[G('GIỚI THIỆU',['A. Collocations','B. Idioms'])]),
+    SG('PHẦN II: CÁC CHỦ ĐỀ COLLOCATIONS VÀ IDIOMS',
+      collTopics.map((t,i)=>{
+        const num='CHỦ ĐỀ '+pad(i+1)+': '+t;
+        if(i===16||i===30||i===44) return G(num,[]);
+        return G(num,['A. CỤM TỪ CỐ ĐỊNH','B. THÀNH NGỮ']);
+      })
+    )
+  ]),
+
+  // ===== TAB 18: TỔNG ÔN TỪ VỰNG (SG) =====
+  N('18. TỔNG ÔN TỪ VỰNG TIẾNG ANH',[
+    SG('PHẦN I: KIẾN THỨC TỪ VỰNG CƠ BẢN',[
+      G('CHỦ ĐỀ 1: NGHĨA CỦA TỪ',['Bài tập từ vựng 1','Bài tập từ vựng 2','Bài tập từ vựng 3','Bài tập từ vựng 4']),
+      G('CHỦ ĐỀ 2: TỪ LOẠI',['Bài tập từ loại 1','Bài tập từ loại 2','Bài tập từ loại 3','Bài tập Conversation','Bài tập Culture','Bài tập Education','Bài tập Entertainment','Bài tập Environment','Bài tập Family','Bài tập Health','Bài tập Job','Bài tập Science and Technology','Bài tập Tourism'])
+    ]),
+    SG('PHẦN II: CÁC DẠNG TỪ VỰNG NÂNG CAO',[
+      G('CHỦ ĐỀ 3: TỪ VỰNG NÂNG CAO',A(6,n=>'Bài tập từ vựng nâng cao – Đề '+n)),
+      G('CHỦ ĐỀ 4: TỪ CÙNG TRƯỜNG NGHĨA',A(3,n=>'Bài tập từ cùng trường nghĩa – Đề '+n)),
+      G('CHỦ ĐỀ 5: TỪ VỰNG NÂNG CAO LỒNG TRONG TỪ CÙNG TRƯỜNG NGHĨA',['Bài tập từ vựng nâng cao lồng trong từ cùng trường nghĩa']),
+      G('CHỦ ĐỀ 6: TỪ DỄ NHẦM LẪN',A(5,n=>'Bài tập từ dễ gây nhầm lẫn – Đề '+n)),
+      G('CHỦ ĐỀ 7: CỤM TỪ CỐ ĐỊNH',A(5,n=>'Bài tập các cụm từ cố định thường gặp – Đề '+n)),
+      G('CHỦ ĐỀ 8: KẾT HỢP TỪ',A(3,n=>'Bài tập kết hợp từ – Đề '+n)),
+      G('CHỦ ĐỀ 9: THÀNH NGỮ',['Bài tập Idioms – Đề 1','Bài tập Idioms – Đề 2','Bài tập Idioms – Đề 3','Bài tập Idioms – Đề 4','Bài tập Idioms – Đề 5','Bài tập đồng nghĩa về Idioms','Bài tập trái nghĩa về Idioms – Đề 1','Bài tập trái nghĩa về Idioms – Đề 2','Bài tập trái nghĩa về Idioms – Đề 3','Bài tập trái nghĩa về Idioms – Đề 4']),
+      G('CHỦ ĐỀ 10: CỤM ĐỘNG TỪ',['Bài tập cụm động từ thông dụng – Đề 1','Bài tập cụm động từ thông dụng – Đề 2','Bài tập cụm động từ thông dụng – Đề 3','Bài tập cụm động từ nâng cao – Đề 4']),
+      G('CHỦ ĐỀ 11: GIỚI TỪ',A(5,n=>'Bài tập giới từ – Đề '+n))
+    ]),
+    SG('PHẦN III: QUAN HỆ NGỮ NGHĨA',[
+      G('CHỦ ĐỀ 12: ĐỒNG NGHĨA – TRÁI NGHĨA',[...A(4,n=>'Bài tập từ đồng nghĩa – Đề '+n),...A(4,n=>'Bài tập từ trái nghĩa – Đề '+n)]),
+      G('CHỦ ĐỀ 14: MỘT TỪ BA NGHĨA',A(3,n=>'Bài tập một từ ba nghĩa – Đề '+n))
+    ]),
+    SG('PHẦN IV: CÁC DẠNG BÀI TẬP VẬN DỤNG',[
+      G('CHỦ ĐỀ 13: ĐỤC LỖ',['Bài tập Education','Bài tập Culture','Bài tập Environment','Bài tập Entertainment','Bài tập Mass Media','Bài tập Health','Bài tập Generation','Bài tập Family','Bài tập Conversation','Bài tập Jobs','Bài tập Cultures','Bài tập Media','Bài tập Volunteer','Bài tập Urbanization','Bài tập Global Warming','Bài tập Gender Equality']),
+      G('CHỦ ĐỀ 15: SẮP XẾP CÂU THÀNH ĐOẠN VĂN',['Sắp xếp câu tạo thành đoạn văn'])
+    ])
+  ]),
+
+  // ===== TAB 19: 60 ĐỀ TIẾNG ANH =====
+  N('19. 60 ĐỀ TIẾNG ANH',[S('DANH SÁCH ĐỀ',de(60))]),
+
+  // ===== TAB 20: 333 CÂU HỎI =====
+  N('20. 333 CÂU HỎI TIẾNG ANH — TƯ DUY VÀ GIẢI QUYẾT VẤN ĐỀ',[
+    S('PHẦN 1: GIỚI THIỆU TỔNG QUAN',['Giới thiệu tổng quan']),
+    S('DẠNG 1: GIẢI QUYẾT TÌNH HUỐNG TRONG GIAO TIẾP',['Giao tiếp theo tình huống (Situational Expression)','Câu hỏi suy luận (Inference Questions)','Hoàn thành đoạn hội thoại (Dialogue Completion)']),
+    S('DẠNG 2: KIẾN THỨC CHUNG',['Câu hỏi về kiến thức chung (General Knowledge)']),
+    S('DẠNG 3: LÝ LUẬN LOGIC',['Sự thật và Quan điểm (Facts vs. Opinions)','Khẳng định và Kết luận (Statements vs. Conclusions)','Phân tích lập luận (Analysing Arguments)','Minh họa thuật ngữ (Matching Definitions)','Mệnh đề tương đương (Parallel Reasoning)'])
+  ]),
+
+  // ===== TAB 21: HSA TIẾNG ANH (SG) =====
+  N('21. HSA — TỔNG ÔN PHẦN TIẾNG ANH',[
+    SG('PART 0',[G('GIỚI THIỆU',['Ma trận Đề Minh Hoạ HSA năm 2025','Các phạm trù kiến thức nền tảng'])]),
+    SG('PART 1 - CHAPTER 1: NGỮ PHÁP NỀN TẢNG',[
+      G('CHUYÊN ĐỀ 1: THÌ ĐỘNG TỪ VÀ SỰ PHỐI HỢP CÁC THÌ',['I. Các thì cơ bản trong tiếng Anh','II. Sự phối hợp các thì']),
+      G('CHUYÊN ĐỀ 2: TỪ LOẠI VÀ TRẬT TỰ TỪ LOẠI',['I. Danh từ','II. Tính từ','III. Trạng từ']),
+      G('CHUYÊN ĐỀ 3: SO SÁNH',['I. So sánh ngang bằng','II. So sánh hơn','III. So sánh nhất','IV. So sánh kép','V. So sánh gấp nhiều lần']),
+      G('CHUYÊN ĐỀ 9: CÂU ĐIỀU KIỆN & CÂU ƯỚC',['I. Các loại câu điều kiện cơ bản','II. Một số cách diễn đạt câu điều kiện khác','III. Câu ước']),
+      G('CHUYÊN ĐỀ 10: DANH ĐỘNG TỪ - PHÂN TỪ - ĐỘNG TỪ NGUYÊN MẪU',['I. Danh động từ','II. Phân từ','III. Sự khác nhau giữa danh động từ và phân từ','IV. Động từ nguyên thể','V. Động từ có thể theo sau cả danh động từ hoặc động từ nguyên mẫu']),
+      G('CHUYÊN ĐỀ 11: CÂU TƯỜNG THUẬT',['Lý thuyết câu tường thuật']),
+      G('CHUYÊN ĐỀ 12: CÂU BỊ ĐỘNG',['Lý thuyết câu bị động']),
+      G('CHUYÊN ĐỀ 13: LIÊN TỪ',['Lý thuyết liên từ']),
+      G('CHUYÊN ĐỀ 14: ĐẢO NGỮ',['Lý thuyết đảo ngữ']),
+      G('CHUYÊN ĐỀ 15: CÂU HỎI ĐUÔI',['I. Nguyên tắc chung khi lập câu hỏi đuôi','II. Một số trường hợp cần lưu ý']),
+      G('CHUYÊN ĐỀ 16: MỘT SỐ CẤU TRÚC VIẾT LẠI CÂU THÔNG DỤNG',['Lý thuyết cấu trúc viết lại câu'])
+    ]),
+    SG('PART 1 - CHAPTER 2: MỘT SỐ PHẠM TRÙ NÂNG CAO',[
+      G('CHUYÊN ĐỀ 17: GIỚI TỪ ĐI VỚI DANH TỪ - ĐỘNG TỪ - TÍNH TỪ',['I. Giới từ đi với danh từ','II. Giới từ đi với động từ','III. Giới từ đi với tính từ']),
+      G('CHUYÊN ĐỀ 18: CỤM ĐỘNG TỪ',['Lý thuyết cụm động từ']),
+      G('CHUYÊN ĐỀ 19: CÁC NHÓM TỪ CÙNG TRƯỜNG NGHĨA / DỄ GÂY NHẦM LẪN',['I. Từ cùng trường nghĩa','II. Các từ dễ nhầm lẫn']),
+      G('CHUYÊN ĐỀ 20: KẾT HỢP TỪ',['I. Collocations & Phrases in sentences','II. Idioms in sentences'])
+    ]),
+    SG('PART 1 - CHAPTER 3: ĐỊNH HƯỚNG ÔN TẬP THEO DẠNG',[
+      G('DẠNG 01: HOÀN THÀNH CÂU',A(10,n=>'Test '+n))
+    ]),
+    SG('PART 2: TỪ VỰNG — ĐỌC HIỂU — ĐỌC ĐIỀN',[
+      G('CHAPTER 1: NHỮNG ĐIỀU CẦN BIẾT',['Lý thuyết']),
+      G('CHAPTER 2: HỌC TỪ VỰNG THEO CHỦ ĐỀ',
+        ['TOPIC 1: Relationships — Đọc hiểu / Đọc điền / Đồng nghĩa & Trái nghĩa',
+         'TOPIC 2: Health — Đọc hiểu / Đọc điền / Đồng nghĩa & Trái nghĩa',
+         'TOPIC 13: Environment — Đọc hiểu / Đọc điền / Đồng nghĩa & Trái nghĩa',
+         'TOPIC 14: Technology — Đọc hiểu / Đọc điền / Đồng nghĩa & Trái nghĩa',
+         'TOPIC 15: Artificial Intelligence — Đọc hiểu / Đọc điền / Đồng nghĩa & Trái nghĩa'])
+    ]),
+    SG('PART 3: TƯ DUY LOGIC VÀ GIẢI QUYẾT VẤN ĐỀ',[
+      G('DẠNG 10: TƯ DUY LOGIC VÀ GIẢI QUYẾT VẤN ĐỀ',['Practice Test',...A(10,n=>'Test '+n)])
+    ])
+  ]),
+
+  // ===== TAB 22: HSA NGÔN NGỮ - VĂN HỌC (SG) =====
+  N('22. HSA — PHẦN NGÔN NGỮ - VĂN HỌC',[
+    S('PHẦN I: PHÂN TÍCH BÀI THI',['Phân tích bài thi đánh giá năng lực phần Ngôn ngữ - Văn học']),
+    SG('PHẦN II: THỰC HÀNH LUYỆN TẬP',[
+      G('DẠNG 1A: CHỌN MỘT TỪ/CỤM TỪ KHÔNG CÙNG NHÓM',['Bài tập luyện tập']),
+      G('DẠNG 1B: CHỌN CẶP TỪ/CỤM TỪ ĐIỀN VÀO CHỖ TRỐNG',['Bài tập luyện tập']),
+      G('DẠNG 1C: XÁC ĐỊNH TỪ/CỤM TỪ SAI',['Bài tập luyện tập']),
+      G('DẠNG 2: CÂU HỎI VỀ KIỂU LOẠI, THỂ LOẠI VĂN BẢN',['Bài tập luyện tập']),
+      G('DẠNG 3A: CÂU HỎI VỀ VĂN BẢN NGHỊ LUẬN (CHÙM)',['Bài tập luyện tập']),
+      G('DẠNG 3B: CÂU HỎI VỀ VĂN BẢN THÔNG TIN (CHÙM)',['Bài tập luyện tập']),
+      G('DẠNG 3C: CÂU HỎI VỀ VĂN BẢN VĂN HỌC (CHÙM)',['Bài tập luyện tập'])
+    ]),
+    SG('PHẦN III: HỆ THỐNG KIẾN THỨC HỖ TRỢ',[
+      G('A. KIẾN THỨC TIẾNG VIỆT',['I. Từ ngữ','II. Ngữ pháp','III. Hoạt động giao tiếp','IV. Sự phát triển của ngôn ngữ','V. Một số lỗi thường gặp trong tiếng Việt']),
+      G('B. KIẾN THỨC VĂN BẢN',['I. Văn bản thông tin','II. Văn bản nghị luận','III. Văn bản văn học']),
+      G('B. VĂN BẢN VĂN HỌC - CHI TIẾT',['1. Khái niệm nội dung và hình thức','2. Lịch sử văn học','3. Thể loại truyện','4. Thể loại thơ','5. Thể loại kí','6. Thể loại kịch'])
+    ])
+  ]),
+
+  // ===== TAB 23: 20 ĐỀ HSA =====
+  N('23. 20 ĐỀ LUYỆN THI ĐÁNH GIÁ NĂNG LỰC (ĐHQG Hà Nội)',[S('DANH SÁCH ĐỀ',A(20,n=>'ĐỀ '+pad(n)))]),
+
+  // ===== TAB 24: CHẤP BÚT 1000 CÂU WRITING =====
+  N('24. CHẤP BÚT 1000 CÂU WRITING',[S('TẬP 1',A(30,n=>'TOPIC '+pad(n))),S('TẬP 2',A(30,n=>'TOPIC '+pad(n)))]),
+
+  // ===== TAB 25: PYTHON (SG - Bài → I/II) =====
+  N('25. PYTHON',[
+    SG('BÀI 3: BIẾN VÀ KIỂU DỮ LIỆU',[G('I. LÝ THUYẾT NỀN TẢNG',['Biến là gì','Các kiểu dữ liệu']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 4: BIỂU THỨC VÀ TOÁN TỬ',[G('I. LÝ THUYẾT NỀN TẢNG',['Biểu thức và toán tử','Các loại toán tử','Toán tử số học','Toán tử so sánh','Toán tử logic','Toán tử gán','Toán tử dịch bit','Toán tử định danh','Toán tử thành viên','Toán tử 3 ngôi']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 5: CẤU TRÚC RẼ NHÁNH',[G('I. LÝ THUYẾT NỀN TẢNG',['Cấu trúc if','Cấu trúc if...else','Cấu trúc if...elif...else']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 6: CẤU TRÚC LẶP',[G('I. LÝ THUYẾT NỀN TẢNG',['Vòng lặp for','Vòng lặp while','Lệnh break và continue','Vòng lặp for...else','Vòng lặp while...else']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 7: LIST VÀ TUPLE',[G('I. LÝ THUYẾT NỀN TẢNG',['Khái niệm về list','Các kiểu dữ liệu trong list','Tạo list từ các phần tử','Truy cập các phần tử trong list','Thêm phần tử vào list','Xóa phần tử trong list','Duyệt các phần tử trong list','Các hàm trong list','Khái niệm về tuple','Các kiểu dữ liệu trong tuple','Tạo tuple từ các phần tử','Truy cập các phần tử trong tuple','Duyệt các phần tử trong tuple']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 8: SET VÀ DICTIONARY',[G('I. LÝ THUYẾT NỀN TẢNG',['Khái niệm về set','Tạo set từ các phần tử','Truy cập các phần tử trong set','Thêm một phần tử vào set','Xóa một phần tử trong set','Duyệt các phần tử trong set','Các hàm trong set','Khái niệm về dictionary','Tạo dictionary','Truy cập các phần tử trong dictionary','Thêm hoặc cập nhật phần tử trong dictionary','Duyệt các phần tử trong dictionary','Xóa phần tử trong dictionary','Các phương thức trong dictionary']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 9: CHUỖI KÍ TỰ',[G('I. LÝ THUYẾT NỀN TẢNG',['Khái niệm về chuỗi','Các phương thức xử lý chuỗi']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 10: HÀM TRONG PYTHON',[G('I. LÝ THUYẾT NỀN TẢNG',['Hàm là gì','Cú pháp khai báo hàm','Cách gọi hàm','Hàm có đối số','Hàm có giá trị trả về','Hàm lambda']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 11: MODULES VÀ PACKAGES',[G('I. LÝ THUYẾT NỀN TẢNG',['Module là gì','Packages là gì','Các loại packages trong Python']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])]),
+    SG('BÀI 12: XỬ LÝ NGOẠI LỆ EXCEPTION',[G('I. LÝ THUYẾT NỀN TẢNG',['Ngôn ngữ Exception','Exception tích hợp trong Python','Xử lý ngoại lệ','Exception định nghĩa bởi người dùng']),G('II. BÀI TẬP THỰC HÀNH',['Bài tập thực hành'])])
+  ])
+  ];
+}
+
+// ===== HYDRATE =====
+function hydrate(raw){
+  const tabs=raw.map(t=>{
+    const tab={id:uid(),name:t.name,type:t.type};
+    tab.sections=t.sections.map(s=>{
+      const sec={id:uid(),name:s.name,type:s.type};
+      if(s.type==='grouped'){
+        sec.groups=(s.groups||[]).map(g=>({id:uid(),name:g.name,items:g.items.map(it=>({id:uid(),text:it.text,done:!!it.done}))}));
+        sec.items=[];
+      } else if(s.type==='dual'){
+        sec.items=s.items.map(it=>({id:uid(),text:it.text,sgk:!!it.sgk,sbt:!!it.sbt}));
+      } else {
+        sec.items=s.items.map(it=>({id:uid(),text:it.text,done:!!it.done}));
+      }
+      return sec;
+    });
+    return tab;
+  });
+  return {tabs,activeTabId:tabs[0]?tabs[0].id:null};
+}
+
+// ===== STATE =====
+const KEY='checklist-tabbed-v3';
+let state=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){console.warn(e)}}
+function load(){try{const raw=localStorage.getItem(KEY);if(!raw)return null;const d=JSON.parse(raw);if(!d||!Array.isArray(d.tabs))return null;return d}catch(e){return null}}
+
+// ===== COMPUTATION =====
+function itemProgress(it,type){return type==='dual'?((it.sgk?1:0)+(it.sbt?1:0)):(it.done?1:0)}
+function groupDone(g){return g.items.length>0&&g.items.every(it=>it.done)}
+function groupProgress(g){return {done:g.items.filter(it=>it.done).length,total:g.items.length}}
+function sectionTotal(sec){
+  if(sec.type==='grouped') return sec.groups.reduce((sum,g)=>sum+g.items.length,0);
+  return sec.items.length*(sec.type==='dual'?2:1);
+}
+function sectionDone(sec){
+  if(sec.type==='grouped') return sec.groups.reduce((sum,g)=>sum+g.items.filter(it=>it.done).length,0);
+  return sec.items.reduce((n,it)=>n+itemProgress(it,sec.type),0);
+}
+function tabProgress(tab){let total=0,done=0;tab.sections.forEach(s=>{total+=sectionTotal(s);done+=sectionDone(s)});return {total,done,pct:total?Math.round(done/total*100):0}}
+
+// ===== DOM =====
+const $tabs=document.getElementById('tabs');
+const $content=document.getElementById('content');
+const $statNum=document.getElementById('statNum');
+const $statBar=document.getElementById('statBar');
+const $statPct=document.getElementById('statPct');
+const $search=document.getElementById('search');
+let searchQuery='';
+
+// ===== RENDER =====
+function renderTabs(){
+  const activeId=state.activeTabId;
+  $tabs.innerHTML=state.tabs.map(t=>{
+    const p=tabProgress(t);
+    const isComplete=p.total>0&&p.pct===100;
+    return `<div class="tab ${t.id===activeId?'active':''} ${isComplete?'complete':''}" data-tab-id="${t.id}">
+      <span class="tab-name">${esc(t.name)}</span>
+      <span class="tab-pct">${isComplete?'✓ ':''}${p.pct}%</span>
+      <button class="tab-del" data-act="del-tab" data-tab-id="${t.id}" title="Xóa tab">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function renderContent(){
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab){$content.innerHTML=`<div class="empty"><p><b>Chưa có tab nào.</b></p><p>Nhấn <b>＋ Tab mới</b> để bắt đầu.</p></div>`;return}
+  const p=tabProgress(tab);
+  $content.innerHTML=`
+    <section class="group" data-gid="${tab.id}">
+      <div class="group-head">
+        <h2>${esc(tab.name)}</h2>
+        <span class="pill">${p.done}/${p.total} · ${p.pct}%</span>
+        <div class="tools">
+          <button class="btn" data-act="rename-tab" data-tab-id="${tab.id}">✎ Đổi tên</button>
+          <button class="btn" data-act="add-section" data-tab-id="${tab.id}">＋ Chương</button>
+          <button class="btn danger" data-act="del-tab" data-tab-id="${tab.id}">Xóa tab</button>
+        </div>
+        <div class="bar"><span style="width:${p.pct}%"></span></div>
+      </div>
+      <div class="group-body">
+        ${tab.sections.map(s=>renderSection(tab,s)).join('')}
+        <button class="add-section-inline" data-act="add-section" data-tab-id="${tab.id}">＋ Thêm chương / bài học</button>
+      </div>
+    </section>`;
+}
+
+function renderSection(tab,s){
+  const done=sectionDone(s),total=sectionTotal(s);
+  const isComplete=total>0&&done===total;
+  const head=`
+    <div class="section-head">
+      <button class="chev" data-act="toggle-section" data-sid="${s.id}">${s.collapsed?'▸':'▾'}</button>
+      <h3 contenteditable="true" spellcheck="false" data-edit="section" data-sid="${s.id}">${esc(s.name)}</h3>
+      <span class="pill">${isComplete?'✓ ':''}${done}/${total}</span>
+      <button class="btn tiny danger" data-act="del-section" data-sid="${s.id}">Xóa</button>
+    </div>`;
+  let body;
+  if(s.type==='grouped'){
+    body=`${s.groups.map(g=>renderSubGroup(s,g)).join('')}<button class="add-section-inline" data-act="add-group" data-sid="${s.id}">＋ Thêm bài / nhóm</button>`;
+  } else if(s.type==='dual'){
+    body=`<div class="dual-grid">${renderDualCol(tab,s,'sgk','📘 Sách giáo khoa (SGK)')}${renderDualCol(tab,s,'sbt','📗 Sách bài tập (SBT)')}</div><button class="add-item" data-act="add-item" data-sid="${s.id}">＋ Thêm bài học</button>`;
+  } else {
+    body=`<ul class="items">${s.items.map(it=>renderSingleItem(s,it)).join('')}</ul><button class="add-item" data-act="add-item" data-sid="${s.id}">＋ Thêm mục</button>`;
+  }
+  return `<div class="section ${s.collapsed?'collapsed':''} ${isComplete?'complete':''}" data-sid="${s.id}">${head}<div class="section-body">${body}</div></div>`;
+}
+
+function renderSubGroup(s,g){
+  const prog=groupProgress(g);
+  const isDone=groupDone(g);
+  return `
+    <div class="subgroup ${isDone?'done':''}" data-gid="${g.id}">
+      <div class="subgroup-head">
+        <input type="checkbox" ${isDone?'checked':''} data-act="toggle-group-all" data-sid="${s.id}" data-gid="${g.id}" title="Tick để chọn / bỏ chọn tất cả mục">
+        <h4 contenteditable="true" spellcheck="false" data-edit="group" data-sid="${s.id}" data-gid="${g.id}">${esc(g.name)}</h4>
+        <span class="pill mini">${prog.done}/${prog.total}</span>
+        <button class="del" data-act="del-group" data-sid="${s.id}" data-gid="${g.id}" title="Xóa bài / nhóm">✕</button>
+      </div>
+      <ul class="items">
+        ${g.items.map(it=>`<li class="item ${it.done?'done':''}" data-iid="${it.id}"><input type="checkbox" ${it.done?'checked':''} data-act="toggle" data-sid="${s.id}" data-gid="${g.id}" data-iid="${it.id}" data-key="done"><span class="txt" contenteditable="true" spellcheck="false" data-edit="item" data-sid="${s.id}" data-gid="${g.id}" data-iid="${it.id}">${esc(it.text)}</span><button class="del" data-act="del-item" data-sid="${s.id}" data-gid="${g.id}" data-iid="${it.id}" title="Xóa">✕</button></li>`).join('')}
+      </ul>
+      <button class="add-item" data-act="add-item" data-sid="${s.id}" data-gid="${g.id}">＋ Thêm mục</button>
+    </div>`;
+}
+
+function renderSingleItem(s,it){
+  return `<li class="item ${it.done?'done':''}" data-iid="${it.id}"><input type="checkbox" ${it.done?'checked':''} data-act="toggle" data-sid="${s.id}" data-iid="${it.id}" data-key="done"><span class="txt" contenteditable="true" spellcheck="false" data-edit="item" data-sid="${s.id}" data-iid="${it.id}">${esc(it.text)}</span><button class="del" data-act="del-item" data-sid="${s.id}" data-iid="${it.id}" title="Xóa">✕</button></li>`;
+}
+
+function renderDualCol(tab,s,key,label){
+  const items=s.items;
+  const done=items.filter(it=>it[key]).length;
+  return `<div class="dual-col"><div class="dual-title"><span>${label}</span><span class="pill mini">${done}/${items.length}</span></div><ul class="items">${items.map(it=>`<li class="item ${it[key]?'done':''}" data-iid="${it.id}"><input type="checkbox" ${it[key]?'checked':''} data-act="toggle" data-sid="${s.id}" data-iid="${it.id}" data-key="${key}"><span class="txt" contenteditable="true" spellcheck="false" data-edit="item" data-sid="${s.id}" data-iid="${it.id}">${esc(it.text)}</span><button class="del" data-act="del-item" data-sid="${s.id}" data-iid="${it.id}" title="Xóa">✕</button></li>`).join('')}</ul></div>`;
+}
+
+function updateStats(){
+  let total=0,done=0;
+  state.tabs.forEach(t=>{const p=tabProgress(t);total+=p.total;done+=p.done});
+  const pct=total?Math.round(done/total*100):0;
+  $statNum.textContent=done+'/'+total;
+  $statPct.textContent=pct+'%';
+  $statBar.style.width=pct+'%';
+}
+
+function updateTabBadge(tabId){
+  const tab=state.tabs.find(t=>t.id===tabId);
+  if(!tab)return;
+  const p=tabProgress(tab);
+  const isComplete=p.total>0&&p.pct===100;
+  const el=document.querySelector(`.tab[data-tab-id="${tabId}"] .tab-pct`);
+  if(el)el.textContent=(isComplete?'✓ ':'')+p.pct+'%';
+  const tabEl=document.querySelector(`.tab[data-tab-id="${tabId}"]`);
+  if(tabEl)tabEl.classList.toggle('complete',isComplete);
+  const groupEl=document.querySelector(`.group[data-gid="${tabId}"]`);
+  if(groupEl){
+    const badge=groupEl.querySelector('.group-head .pill');
+    if(badge)badge.textContent=`${p.done}/${p.total} · ${p.pct}%`;
+    const bar=groupEl.querySelector('.group-head .bar span');
+    if(bar)bar.style.width=p.pct+'%';
+  }
+}
+
+function updateSectionBadge(sid){
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab)return;
+  const s=tab.sections.find(x=>x.id===sid);
+  if(!s)return;
+  const secEl=document.querySelector(`.section[data-sid="${sid}"]`);
+  if(!secEl)return;
+  const total=sectionTotal(s),done=sectionDone(s);
+  const isComplete=total>0&&done===total;
+  const pill=secEl.querySelector('.section-head .pill');
+  if(pill)pill.textContent=(isComplete?'✓ ':'')+`${done}/${total}`;
+  secEl.classList.toggle('complete',isComplete);
+  if(s.type==='dual'){
+    ['sgk','sbt'].forEach(k=>{
+      const cols=secEl.querySelectorAll('.dual-col');
+      const idx=k==='sgk'?0:1;
+      if(cols[idx]){
+        const pl=cols[idx].querySelector('.dual-title .pill');
+        if(pl)pl.textContent=`${s.items.filter(it=>it[k]).length}/${s.items.length}`;
+      }
+    });
+  }
+}
+
+function updateGroupUI(sid,gid){
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab)return;
+  const s=tab.sections.find(x=>x.id===sid);
+  if(!s||s.type!=='grouped')return;
+  const g=s.groups.find(x=>x.id===gid);
+  if(!g)return;
+  const groupEl=document.querySelector(`.subgroup[data-gid="${gid}"]`);
+  if(!groupEl)return;
+  const isDone=groupDone(g);
+  const prog=groupProgress(g);
+  groupEl.classList.toggle('done',isDone);
+  const cb=groupEl.querySelector(':scope > .subgroup-head input[type=checkbox]');
+  if(cb)cb.checked=isDone;
+  const pill=groupEl.querySelector(':scope > .subgroup-head .pill');
+  if(pill)pill.textContent=`${prog.done}/${prog.total}`;
+}
+
+function render(){renderTabs();renderContent();updateStats();applySearch()}
+
+function applySearch(){
+  const q=searchQuery.trim().toLowerCase();
+  if(!q){document.querySelectorAll('.hide').forEach(el=>el.classList.remove('hide'));return}
+  document.querySelectorAll('.section').forEach(secEl=>{
+    let matchAny=false;
+    secEl.querySelectorAll('.item').forEach(li=>{
+      const t=(li.querySelector('.txt')?.textContent||'').toLowerCase();
+      const m=t.includes(q);
+      li.classList.toggle('hide',!m);
+      if(m)matchAny=true;
+    });
+    if(secEl.querySelectorAll('.item').length===0)matchAny=true;
+    secEl.classList.toggle('hide',!matchAny);
+  });
+}
+
+// ===== EVENTS: TABS =====
+$tabs.addEventListener('click',e=>{
+  const delBtn=e.target.closest('[data-act="del-tab"]');
+  if(delBtn){
+    e.stopPropagation();
+    const id=delBtn.dataset.tabId;
+    const t=state.tabs.find(x=>x.id===id);
+    if(!t)return;
+    if(!confirm(`Xóa tab "${t.name}" và toàn bộ nội dung?`))return;
+    state.tabs=state.tabs.filter(x=>x.id!==id);
+    if(state.activeTabId===id)state.activeTabId=state.tabs[0]?state.tabs[0].id:null;
+    save();render();
+    return;
+  }
+  const tabEl=e.target.closest('.tab');
+  if(tabEl){
+    const id=tabEl.dataset.tabId;
+    if(id!==state.activeTabId){state.activeTabId=id;save();render()}
+  }
+});
+
+// ===== EVENTS: CONTENT =====
+$content.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]');
+  if(!el)return;
+  const act=el.dataset.act;
+  if(act==='toggle'||act==='toggle-group-all')return;
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab)return;
+  const sid=el.dataset.sid,gid=el.dataset.gid;
+  switch(act){
+    case 'rename-tab':{const n=prompt('Đổi tên tab:',tab.name);if(n&&n.trim()){tab.name=n.trim();save();render()}break}
+    case 'del-tab':{if(!confirm(`Xóa tab "${tab.name}" và toàn bộ nội dung?`))return;state.tabs=state.tabs.filter(x=>x.id!==tab.id);state.activeTabId=state.tabs[0]?state.tabs[0].id:null;save();render();break}
+    case 'add-section':{const n=prompt('Tên chương / bài học mới:','Chương / Bài mới');if(n===null)return;tab.sections.push({id:uid(),name:n.trim()||'Chương / Bài mới',type:'single',items:[]});save();render();break}
+    case 'del-section':{if(!confirm('Xóa chương / bài học này và toàn bộ nội dung?'))return;tab.sections=tab.sections.filter(s=>s.id!==sid);save();render();break}
+    case 'toggle-section':{const s=tab.sections.find(x=>x.id===sid);if(!s)return;s.collapsed=!s.collapsed;save();const secEl=document.querySelector(`.section[data-sid="${sid}"]`);if(secEl)secEl.classList.toggle('collapsed',s.collapsed);el.textContent=s.collapsed?'▸':'▾';break}
+    case 'add-group':{const s=tab.sections.find(x=>x.id===sid);if(!s||s.type!=='grouped')return;const n=prompt('Tên bài / nhóm mới:','Bài mới');if(n===null)return;s.groups.push({id:uid(),name:n.trim()||'Bài mới',items:[]});save();render();break}
+    case 'del-group':{const s=tab.sections.find(x=>x.id===sid);if(!s||s.type!=='grouped')return;if(!confirm('Xóa bài / nhóm này và toàn bộ mục con?'))return;s.groups=s.groups.filter(g=>g.id!==gid);save();render();break}
+    case 'add-item':{const s=tab.sections.find(x=>x.id===sid);if(!s)return;const txt=prompt('Nội dung mới:','Nội dung mới');if(txt===null)return;if(s.type==='grouped'){const g=gid?s.groups.find(x=>x.id===gid):(s.groups[s.groups.length-1]||null);if(g)g.items.push({id:uid(),text:txt.trim()||'Mục mới',done:false})}else if(s.type==='dual'){s.items.push({id:uid(),text:txt.trim()||'Bài học mới',sgk:false,sbt:false})}else{s.items.push({id:uid(),text:txt.trim()||'Mục mới',done:false})}save();render();break}
+    case 'del-item':{const s=tab.sections.find(x=>x.id===sid);if(!s)return;if(!confirm('Xóa mục này?'))return;if(s.type==='grouped'){const g=s.groups.find(x=>x.id===gid);if(g)g.items=g.items.filter(it=>it.id!==el.dataset.iid)}else{s.items=s.items.filter(it=>it.id!==el.dataset.iid)}save();render();break}
+  }
+});
+
+// ===== EVENTS: CHECKBOX =====
+$content.addEventListener('change',e=>{
+  const cb=e.target;
+  if(cb.matches('input[type=checkbox][data-act="toggle-group-all"]')){
+    const tab=state.tabs.find(t=>t.id===state.activeTabId);
+    if(!tab)return;
+    const s=tab.sections.find(x=>x.id===cb.dataset.sid);
+    if(!s||s.type!=='grouped')return;
+    const g=s.groups.find(x=>x.id===cb.dataset.gid);
+    if(!g)return;
+    const ns=cb.checked;
+    g.items.forEach(it=>it.done=ns);
+    save();
+    const groupEl=document.querySelector(`.subgroup[data-gid="${g.id}"]`);
+    if(groupEl){
+      groupEl.querySelectorAll('.item').forEach(li=>{
+        const icb=li.querySelector('input[type=checkbox]');
+        if(icb)icb.checked=ns;
+        li.classList.toggle('done',ns);
+      });
+      groupEl.classList.toggle('done',ns);
+      const pill=groupEl.querySelector(':scope > .subgroup-head .pill');
+      if(pill)pill.textContent=`${ns?g.items.length:0}/${g.items.length}`;
+    }
+    updateSectionBadge(s.id);updateTabBadge(tab.id);updateStats();
+    return;
+  }
+  if(!cb.matches('input[type=checkbox][data-act="toggle"]'))return;
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab)return;
+  const s=tab.sections.find(x=>x.id===cb.dataset.sid);
+  if(!s)return;
+  if(s.type==='grouped'){
+    const g=s.groups.find(x=>x.id===cb.dataset.gid);
+    if(!g)return;
+    const it=g.items.find(x=>x.id===cb.dataset.iid);
+    if(!it)return;
+    it.done=cb.checked;
+    cb.closest('.item').classList.toggle('done',cb.checked);
+    save();updateGroupUI(s.id,g.id);updateSectionBadge(s.id);updateTabBadge(tab.id);updateStats();
+    return;
+  }
+  const it=s.items.find(x=>x.id===cb.dataset.iid);
+  if(!it)return;
+  const key=cb.dataset.key;
+  if(key==='done'){it.done=cb.checked;cb.closest('.item').classList.toggle('done',cb.checked)}
+  else{it[key]=cb.checked;cb.closest('.item').classList.toggle('done',it.sgk&&it.sbt)}
+  save();updateSectionBadge(s.id);updateTabBadge(tab.id);updateStats();
+});
+
+// ===== EVENTS: EDIT =====
+$content.addEventListener('focusout',e=>{
+  const el=e.target.closest('[data-edit]');
+  if(!el)return;
+  const kind=el.dataset.edit;
+  let txt=el.textContent.replace(/\s+/g,' ').trim();
+  if(!txt)txt='(Chưa đặt tên)';
+  el.textContent=txt;
+  const tab=state.tabs.find(t=>t.id===state.activeTabId);
+  if(!tab)return;
+  if(kind==='section'){const s=tab.sections.find(x=>x.id===el.dataset.sid);if(s)s.name=txt}
+  else if(kind==='group'){const s=tab.sections.find(x=>x.id===el.dataset.sid);if(s&&s.type==='grouped'){const g=s.groups.find(x=>x.id===el.dataset.gid);if(g)g.name=txt}}
+  else if(kind==='item'){const s=tab.sections.find(x=>x.id===el.dataset.sid);if(s){if(s.type==='grouped'){const g=s.groups.find(x=>x.id===el.dataset.gid);if(g){const it=g.items.find(x=>x.id===el.dataset.iid);if(it)it.text=txt}}else{const it=s.items.find(x=>x.id===el.dataset.iid);if(it)it.text=txt}}}
+  save();
+});
+
+$content.addEventListener('keydown',e=>{
+  const el=e.target.closest('[data-edit]');
+  if(!el)return;
+  if(e.key==='Enter'){e.preventDefault();el.blur()}
+});
+
+$content.addEventListener('paste',e=>{
+  const el=e.target.closest('[data-edit]');
+  if(!el)return;
+  e.preventDefault();
+  const text=(e.clipboardData||window.clipboardData).getData('text');
+  document.execCommand('insertText',false,text);
+});
+
+// ===== TOOLBAR =====
+document.getElementById('btnNewTab').addEventListener('click',()=>{
+  const n=prompt('Tên tab mới:','Môn học mới');
+  if(n===null)return;
+  const tab={id:uid(),name:n.trim()||'Môn học mới',type:'n',sections:[]};
+  state.tabs.push(tab);state.activeTabId=tab.id;save();render();
+});
+
+$search.addEventListener('input',e=>{searchQuery=e.target.value;applySearch()});
+
+document.getElementById('btnExport').addEventListener('click',()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='checklist-hoc-tap.json';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+});
+
+const fileInput=document.getElementById('fileInput');
+document.getElementById('btnImport').addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',()=>{
+  const f=fileInput.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const data=JSON.parse(r.result);
+      if(!data||!Array.isArray(data.tabs))throw new Error('File không hợp lệ');
+      state=data;
+      if(!state.tabs.find(t=>t.id===state.activeTabId))state.activeTabId=state.tabs[0]?state.tabs[0].id:null;
+      save();render();
+    }catch(err){alert('Lỗi: '+err.message)}
+  };
+  r.readAsText(f);fileInput.value='';
+});
+
+document.getElementById('btnReset').addEventListener('click',()=>{
+  if(!confirm('Khôi phục toàn bộ dữ liệu mẫu? Dữ liệu hiện tại sẽ mất.'))return;
+  state=hydrate(buildSeed());save();render();
+});
+
+// ===== INIT =====
+state=load();
+if(!state){state=hydrate(buildSeed());save()}
+render();
+
+})();
+</script>
+</body>
+</html>
